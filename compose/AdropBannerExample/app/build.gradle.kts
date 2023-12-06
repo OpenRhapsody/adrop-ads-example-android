@@ -67,5 +67,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    implementation("io.adrop:adrop-ads:0.1.3")
+    implementation("io.adrop:adrop-ads:0.1.4")
 }
