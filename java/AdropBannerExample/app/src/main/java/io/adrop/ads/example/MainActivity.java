@@ -1,5 +1,6 @@
 package io.adrop.ads.example;
 
+import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,7 @@ import io.adrop.ads.model.AdropErrorCode;
 
 public class MainActivity extends AppCompatActivity {
 
+    FrameLayout adContainer;
     AdropBanner banner;
 
     @Override
@@ -22,11 +24,14 @@ public class MainActivity extends AppCompatActivity {
 
         Adrop.INSTANCE.initialize(getApplication(), false  /* if release then true */);
 
-        banner = findViewById(R.id.adrop_banner_view);
+        adContainer = findViewById(R.id.ad_container);
+        banner = new AdropBanner(getApplicationContext(), "PUBLIC_TEST_UNIT_ID_320_50");
         banner.setListener(new AdropBannerListener() {
             @Override
             public void onAdReceived(@NonNull AdropBanner banner) {
                 Log.d("Adrop", banner.getUnitId() + ", onAdReceived");
+                adContainer.removeAllViews();
+                adContainer.addView(banner);
             }
 
             @Override
