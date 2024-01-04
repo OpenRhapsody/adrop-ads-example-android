@@ -58,12 +58,12 @@ To use Adrop in your Android app, you need to register your app with your Adrop 
 
     Kotlin (build.gradle.kts)
     ```
-    implementation("io.adrop:adrop-ads:0.1.5")
+    implementation("io.adrop:adrop-ads:0.2.0")
     ```
 
     Groovy (build.gradle)
     ```
-    implementation "io.adrop:adrop-ads:0.1.5"
+    implementation "io.adrop:adrop-ads:0.2.0"
     ```
 
 2. After adding the dependency, sync your Android project with Gradle files.
@@ -135,128 +135,5 @@ The Ad unit’s unique identifier to reference in your code. This setting is rea
 > * PUBLIC_TEST_UNIT_ID_320_50
 > * PUBLIC_TEST_UNIT_ID_375_80
 > * PUBLIC_TEST_UNIT_ID_320_100
-
-
-
-### Display AdropBanner using XML
-1. Layout using XML
-
-    ```xml 
-    <!-- must set layout height, 50dp/80dp/100dp (ad size) -->
-    <io.adrop.ads.banner.AdropBanner
-            android:id="@+id/adrop_banner_view"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:adrop_unit_id="{unitId}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
-    ```
-
-2. find banner, then load ad.
-
-    #### Kotlin
-    ```kt
-    val banner: AdropBanner = findViewById(R.id.adrop_banner_view)
-    banner.listener = object : AdropBannerListener {
-        override fun onAdReceived(banner: AdropBanner) {
-            Log.d("Adrop", "${banner.getUnitId()}, onAdReceived")    // "{unitId}, onAdReceived"
-        }
-    
-        override fun onAdClicked(banner: AdropBanner) {
-            Log.d("Adrop", "${banner.getUnitId()}, onAdClicked")    // "{unitId}, onAdClicked"
-        }
-        
-        override fun onAdFailedToReceive(banner: AdropBanner, error: AdropErrorCode) {
-            Log.d("Adrop", "${banner.getUnitId()}, onAdFailedToReceive $error")  // "{unitId}, onAdFailedToReceive ERROR_CODE_AD_NO_FILL"
-        }
-    }
-    
-    banner.load()   // request ad to server
-    ```
-    
-    #### Java
-    ```java
-    AdropBanner banner = findViewById(R.id.adrop_banner_view);
-    banner.setListener(new AdropBannerListener() {
-        @Override
-        public void onAdReceived(@NonNull AdropBanner banner) {
-            Log.d("Adrop", banner.getUnitId() + ", onAdReceived");  // "{unitId}, onAdReceived"
-        }
-        
-        @Override
-        public void onAdClicked(@NonNull AdropBanner banner) {
-            Log.d("Adrop", banner.getUnitId() + ", onAdClicked");   // "{unitId}, onAdClicked"
-        }
-        
-        @Override
-        public void onAdFailedToReceive(@NonNull AdropBanner banner, @NonNull AdropErrorCode error) {
-            Log.d("Adrop", banner.getUnitId() + ", onAdFailedToReceive " + error);  // "{unitId}, onAdFailedToReceive ERROR_CODE_AD_NO_FILL" 
-        }
-    });
-    
-    banner.load();  // request ad to server
-    ```
-
-
-### Display AdropBanner with class
-
-1. Initialize AdropBanner with Ad unit ID, then load ad.
-2. addView banner when ```onAdReceived``` callback
-
-   #### Kotlin
-    ```kt
-    val banner: AdropBanner = AdropBanner(context, unitId)
-   banner.listener = object : AdropBannerListener {
-        override fun onAdReceived(banner: AdropBanner) {
-            addView(banner)
-        }
-    
-        override fun onAdClicked(banner: AdropBanner) {
-            Log.d("Adrop", "${banner.getUnitId()}, onAdClicked")    // "{unitId}, onAdClicked"
-        }
-        
-        override fun onAdFailedToReceive(banner: AdropBanner, error: AdropErrorCode) {
-            removeView(banner)
-        }
-    }
-   
-    banner.load()   // request ad to server
-    ```
-
-   #### Java
-    ```java
-    AdropBanner banner = new AdropBanner(context, unitId);
-    banner.setListener(new AdropBannerListener() {
-        @Override
-        public void onAdReceived(@NonNull AdropBanner banner) {
-            addView(banner);
-        }
-        
-        @Override
-        public void onAdClicked(@NonNull AdropBanner banner) {
-            Log.d("Adrop", banner.getUnitId() + ", onAdClicked");   // "{unitId}, onAdClicked"
-        }
-        
-        @Override
-        public void onAdFailedToReceive(@NonNull AdropBanner banner, @NonNull AdropErrorCode error) {
-            removeView(banner); 
-        }
-    });
-   
-    banner.load();  // request ad to server
-    ```
-
-   #### Compose
-    ```kt
-    val banner: AdropBanner = AdropBanner(context, unitId)
-    setContent {
-        AndroidView(factory = {
-            banner
-        }, modifier = Modifier.height(80.dp))
-    }
-    
-    banner.load()
-    ```
-
+> * PUBLIC_TEST_UNIT_ID_INTERSTITIAL
+> * PUBLIC_TEST_UNIT_ID_REWARDED
