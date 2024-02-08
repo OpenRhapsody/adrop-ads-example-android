@@ -45,5 +45,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation("io.adrop:adrop-ads:0.2.3")
+    implementation("io.adrop:adrop-ads:0.2.4")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

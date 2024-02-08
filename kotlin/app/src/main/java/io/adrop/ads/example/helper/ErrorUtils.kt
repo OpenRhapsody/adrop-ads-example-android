@@ -1,4 +1,4 @@
-package io.adrop.ads.example.utils
+package io.adrop.ads.example.helper
 
 import io.adrop.ads.model.AdropErrorCode
 
