@@ -18,19 +18,23 @@ import io.adrop.ads.nativeAd.AdropNativeAdListener
 
 class NativeExampleActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
-    private val nativeAd: AdropNativeAd?
+    private val nativeAds: ArrayList<AdropNativeAd>
         get() {
+            val list = arrayListOf<AdropNativeAd>()
+
             for (ad in AdLoader.nativeAds) {
                 if (ad.isLoaded) {
-                    return ad
+                    list.add(ad)
                 }
             }
-            return null
+            return list
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_native_example)
+
+        Log.d("adrop", "nativeAds $nativeAds")
 
         val decoration = DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         recyclerView = findViewById(R.id.list)
@@ -38,15 +42,17 @@ class NativeExampleActivity : AppCompatActivity() {
             layoutManager =
                 LinearLayoutManager(this@NativeExampleActivity, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(decoration)
-            nativeAd?.let { adapter = PostAdapter(it) }
+            adapter = PostAdapter(nativeAds)
         }
     }
 
     override fun onDestroy() {
-        nativeAd?.let {
-            it.destroy()
-            AdLoader.nativeAds.remove(it)
+        for(ad in nativeAds) {
+            ad.destroy()
+            AdLoader.nativeAds.remove(ad)
         }
+
+        nativeAds.clear()
 
         super.onDestroy()
     }

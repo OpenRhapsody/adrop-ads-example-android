@@ -2,6 +2,7 @@ package io.adrop.ads.example;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import io.adrop.ads.Adrop;
 import io.adrop.ads.example.helper.AdLoader;
@@ -24,8 +25,11 @@ public class MainActivity extends AppCompatActivity {
             for(AdropNativeAd ad : AdLoader.nativeAds) {
                 if (ad.isLoaded()) {
                     start(NativeExampleActivity.class);
+                    return;
                 }
             }
+
+            Toast.makeText(this, "There is no native ads", Toast.LENGTH_SHORT).show();
         });
     }
 

@@ -10,13 +10,14 @@ import com.bumptech.glide.Glide
 import io.adrop.ads.example.R
 import io.adrop.ads.example.model.Post
 import io.adrop.ads.nativeAd.AdropNativeAd
+import io.adrop.ads.nativeAd.AdropNativeAdView
 
 enum class ViewType {
     ADROP_NATIVE,
     POST_ITEM
 }
 
-class PostAdapter(private val nativeAd: AdropNativeAd) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter(private val nativeAds: ArrayList<AdropNativeAd>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     private val posts = arrayListOf(Post(), Post(), Post(), Post(), Post(), Post())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -38,21 +39,21 @@ class PostAdapter(private val nativeAd: AdropNativeAd) : RecyclerView.Adapter<Po
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position == 2) return ViewType.ADROP_NATIVE.ordinal
+        if (position < nativeAds.size) return ViewType.ADROP_NATIVE.ordinal
         return ViewType.POST_ITEM.ordinal
     }
 
     override fun getItemCount(): Int {
-        return posts.size + 1
+        return posts.size + nativeAds.size
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         if (holder is NativeAdViewHolder) {
-            holder.onBindView(nativeAd)
+            holder.onBindView(nativeAds[position], position)
             return
         }
 
-        val index = if (position < 2) position else position - 1
+        val index = position - nativeAds.size
         holder.onBindView(posts[index], index)
     }
 
@@ -80,11 +81,20 @@ class PostAdapter(private val nativeAd: AdropNativeAd) : RecyclerView.Adapter<Po
     }
 
     class NativeAdViewHolder(itemView: View) : PostViewHolder(itemView) {
-        fun onBindView(nativeAd: AdropNativeAd) {
-            nativeAd.setIconView(itemView.findViewById(R.id.profile))
-            nativeAd.setHeadLineView(itemView.findViewById<TextView>(R.id.title))
-            nativeAd.setMediaView(itemView.findViewById(R.id.content))
-            nativeAd.setBodyView(itemView.findViewById(R.id.content_text))
+        private val adropNativeAdView: AdropNativeAdView
+
+        init {
+            adropNativeAdView = itemView.findViewById(R.id.adrop_native_ad_view)
+        }
+
+        fun onBindView(nativeAd: AdropNativeAd, position: Int) {
+            adropNativeAdView.setIconView(itemView.findViewById(R.id.profile))
+            adropNativeAdView.setHeadLineView(itemView.findViewById<TextView>(R.id.title))
+            adropNativeAdView.setMediaView(itemView.findViewById(R.id.content))
+            adropNativeAdView.setBodyView(itemView.findViewById(R.id.content_text))
+            adropNativeAdView.setCallToActionView(itemView.findViewById(R.id.call_to_action_view))
+            adropNativeAdView.setAdvertiserView(itemView.findViewById(R.id.advertiser_view))
+            adropNativeAdView.setNativeAd(nativeAd)
         }
     }
 }

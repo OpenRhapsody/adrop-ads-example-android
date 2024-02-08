@@ -16,20 +16,11 @@ import io.adrop.ads.model.AdropErrorCode;
 import io.adrop.ads.nativeAd.AdropNativeAd;
 import io.adrop.ads.nativeAd.AdropNativeAdListener;
 
+import java.util.ArrayList;
+
 public class NativeExampleActivity extends AppCompatActivity {
-
-    private String PUBLIC_TEST_UNIT_ID_NATIVE = "PUBLIC_TEST_UNIT_ID_NATIVE";
-
-    private String INVALID_UNIT_ID = "INVALID_UNIT_ID";
-
-    TextView tvErrorCode;
-    TextView tvErrorDesc;
-    Button btnReset;
-    Button btnResetInvalid;
-    FrameLayout postView;
-
     RecyclerView recyclerView;
-    AdropNativeAd nativeAd;
+    ArrayList<AdropNativeAd> nativeAds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +33,17 @@ public class NativeExampleActivity extends AppCompatActivity {
 
         for(AdropNativeAd ad : AdLoader.nativeAds) {
             if (ad.isLoaded()) {
-                nativeAd = ad;
-                recyclerView.setAdapter(new PostAdapter(nativeAd));
+                nativeAds.add(ad);
+                recyclerView.setAdapter(new PostAdapter(nativeAds));
             }
         }
     }
 
     @Override
     protected void onDestroy() {
-        if (nativeAd != null) {
-            nativeAd.destroy();
-            AdLoader.nativeAds.remove(nativeAd);
+        for(AdropNativeAd ad : nativeAds) {
+            ad.destroy();
+            AdLoader.nativeAds.remove(ad);
         }
         super.onDestroy();
     }

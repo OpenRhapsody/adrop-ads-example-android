@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import io.adrop.ads.example.R;
 import io.adrop.ads.example.model.Post;
 import io.adrop.ads.nativeAd.AdropNativeAd;
+import io.adrop.ads.nativeAd.AdropNativeAdView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -24,10 +25,10 @@ enum ViewType {
 
 public class PostAdapter extends RecyclerView.Adapter {
     private ArrayList<Post> posts = new ArrayList<>();
-    private AdropNativeAd nativeAd;
+    private ArrayList<AdropNativeAd> nativeAds;
 
-    public PostAdapter(AdropNativeAd nativeAd) {
-        this.nativeAd = nativeAd;
+    public PostAdapter(ArrayList<AdropNativeAd> nativeAds) {
+        this.nativeAds = nativeAds;
         posts.add(new Post());
         posts.add(new Post());
         posts.add(new Post());
@@ -50,26 +51,24 @@ public class PostAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 2) return ViewType.ADROP_NATIVE.ordinal();
+        if (position < nativeAds.size()) return ViewType.ADROP_NATIVE.ordinal();
         return ViewType.POST_ITEM.ordinal();
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecyclerView.ViewHolder holder, int position) {
-        if (position == 2) {
-            ((NativeAdViewHolder) holder).onBindView(nativeAd);
+        if (position < nativeAds.size()) {
+            ((NativeAdViewHolder) holder).onBindView(nativeAds.get(position));
             return;
         }
 
-        int index = position < 2 ? position : position - 1;
-        Log.d("adrop", "post size " + posts.size());
-        Log.d("adrop", "position " + position + ", " + "index " + index);
+        int index = position - nativeAds.size();
         ((PostViewHolder) holder).onBindView(posts.get(index), index);
     }
 
     @Override
     public int getItemCount() {
-        return posts.size() + 1;
+        return posts.size() + nativeAds.size();
     }
 
     private static class PostViewHolder extends RecyclerView.ViewHolder {
@@ -99,15 +98,21 @@ public class PostAdapter extends RecyclerView.Adapter {
     }
 
     private static class NativeAdViewHolder extends PostViewHolder {
+        private final AdropNativeAdView nativeAdView;
+
         public NativeAdViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
+            nativeAdView = new AdropNativeAdView(itemView.getContext(), null);
         }
 
         public void onBindView(AdropNativeAd nativeAd) {
-            nativeAd.setIconView(itemView.findViewById(R.id.profile), null);
-            nativeAd.setHeadLineView(itemView.findViewById(R.id.title), null);
-            nativeAd.setMediaView(itemView.findViewById(R.id.content));
-            nativeAd.setBodyView(itemView.findViewById(R.id.content_text));
+            nativeAdView.setIconView(itemView.findViewById(R.id.profile), null);
+            nativeAdView.setHeadLineView(itemView.findViewById(R.id.title), null);
+            nativeAdView.setMediaView(itemView.findViewById(R.id.content));
+            nativeAdView.setBodyView(itemView.findViewById(R.id.content_text));
+            nativeAdView.setCallToActionView(itemView.findViewById(R.id.call_to_action_view));
+            nativeAdView.setAdvertiserView(itemView.findViewById(R.id.advertiser_view), v -> Log.d("adrop", "advertiser view clicked!!"));
+            nativeAdView.setNativeAd(nativeAd);
         }
     }
 }
