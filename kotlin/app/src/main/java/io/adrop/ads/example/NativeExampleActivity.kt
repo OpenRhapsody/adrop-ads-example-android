@@ -2,19 +2,12 @@ package io.adrop.ads.example
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.adrop.ads.example.adapter.PostAdapter
 import io.adrop.ads.example.helper.AdLoader
-import io.adrop.ads.model.AdropErrorCode
 import io.adrop.ads.nativeAd.AdropNativeAd
-import io.adrop.ads.nativeAd.AdropNativeAdListener
 
 class NativeExampleActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -33,8 +26,6 @@ class NativeExampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_native_example)
-
-        Log.d("adrop", "nativeAds $nativeAds")
 
         val decoration = DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         recyclerView = findViewById(R.id.list)
