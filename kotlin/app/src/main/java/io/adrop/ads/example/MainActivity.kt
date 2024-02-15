@@ -10,7 +10,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        findViewById<View>(R.id.initialize).setOnClickListener { Adrop.initialize(application, false) }
+
+        Adrop.initialize(application, false)
+
+        setButtons()
+    }
+
+    private fun setButtons() {
         findViewById<View>(R.id.banner_example).setOnClickListener { start(BannerExampleActivity::class.java) }
         findViewById<View>(R.id.interstitial_example).setOnClickListener { start(InterstitialExampleActivity::class.java) }
         findViewById<View>(R.id.rewarded_example).setOnClickListener { start(RewardedAdExampleActivity::class.java) }

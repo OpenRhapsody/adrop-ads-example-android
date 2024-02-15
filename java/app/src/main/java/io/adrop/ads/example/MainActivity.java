@@ -12,7 +12,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.initialize).setOnClickListener(v -> Adrop.INSTANCE.initialize(getApplication(), false));
+        Adrop.INSTANCE.initialize(getApplication(), false);
+
+        setButtons();
+    }
+
+    private void setButtons() {
         findViewById(R.id.banner_example).setOnClickListener(v -> start(BannerExampleActivity.class));
         findViewById(R.id.interstitial_example).setOnClickListener(v -> start(InterstitialExampleActivity.class));
         findViewById(R.id.rewarded_example).setOnClickListener(v -> start(RewardedAdExampleActivity.class));
