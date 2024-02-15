@@ -7,25 +7,21 @@ import io.adrop.ads.Adrop;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.initialize).setOnClickListener(v -> Adrop.INSTANCE.initialize(getApplication(), false));
+        Adrop.INSTANCE.initialize(getApplication(), false);
 
-        findViewById(R.id.banner_example).setOnClickListener(v -> {
-            start(BannerExampleActivity.class);
-        });
+        setButtons();
+    }
 
-        findViewById(R.id.interstitial_example).setOnClickListener(v -> {
-            start(InterstitialExampleActivity.class);
-        });
-
-        findViewById(R.id.rewarded_example).setOnClickListener(v -> {
-            start(RewardedAdExampleActivity.class);
-        });
+    private void setButtons() {
+        findViewById(R.id.banner_example).setOnClickListener(v -> start(BannerExampleActivity.class));
+        findViewById(R.id.interstitial_example).setOnClickListener(v -> start(InterstitialExampleActivity.class));
+        findViewById(R.id.rewarded_example).setOnClickListener(v -> start(RewardedAdExampleActivity.class));
+        findViewById(R.id.native_example).setOnClickListener(v -> start(NativeExampleActivity.class));
     }
 
     private void start(Class<?> cls) {

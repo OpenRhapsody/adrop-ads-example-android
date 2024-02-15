@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import io.adrop.ads.banner.AdropBanner;
 import io.adrop.ads.banner.AdropBannerListener;
-import io.adrop.ads.example.utils.ErrorUtils;
+import io.adrop.ads.example.helper.ErrorUtils;
 import io.adrop.ads.model.AdropErrorCode;
 
 

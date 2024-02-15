@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import io.adrop.ads.example.utils.ErrorUtils
+import io.adrop.ads.example.helper.ErrorUtils
 import io.adrop.ads.interstitial.AdropInterstitialAd
 import io.adrop.ads.interstitial.AdropInterstitialAdListener
 import io.adrop.ads.model.AdropErrorCode
