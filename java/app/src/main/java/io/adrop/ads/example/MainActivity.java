@@ -2,11 +2,8 @@ package io.adrop.ads.example;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import io.adrop.ads.Adrop;
-import io.adrop.ads.example.helper.AdLoader;
-import io.adrop.ads.nativeAd.AdropNativeAd;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,18 +16,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.banner_example).setOnClickListener(v -> start(BannerExampleActivity.class));
         findViewById(R.id.interstitial_example).setOnClickListener(v -> start(InterstitialExampleActivity.class));
         findViewById(R.id.rewarded_example).setOnClickListener(v -> start(RewardedAdExampleActivity.class));
-        findViewById(R.id.native_load).setOnClickListener (v -> AdLoader.fetchNativeAd(this) );
-        findViewById(R.id.native_example).setOnClickListener(v -> {
-
-            for(AdropNativeAd ad : AdLoader.nativeAds) {
-                if (ad.isLoaded()) {
-                    start(NativeExampleActivity.class);
-                    return;
-                }
-            }
-
-            Toast.makeText(this, "There is no native ads", Toast.LENGTH_SHORT).show();
-        });
+        findViewById(R.id.native_example).setOnClickListener(v -> start(NativeExampleActivity.class));
     }
 
     private void start(Class<?> cls) {

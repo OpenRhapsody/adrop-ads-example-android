@@ -59,21 +59,12 @@
             app:layout_constraintTop_toBottomOf="@id/interstitial_example"/>
 
     <Button
-            android:id="@+id/native_load"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Native Load"
-            app:layout_constraintEnd_toStartOf="@+id/native_example"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rewarded_example"/>
-
-    <Button
             android:id="@+id/native_example"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Native Example"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/native_load"
             app:layout_constraintTop_toBottomOf="@id/rewarded_example"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

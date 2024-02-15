@@ -54,89 +54,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/profile"
         />
 
-        <ImageView
-                android:id="@+id/icon_like"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_heart"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/content"/>
-
         <TextView
-                android:id="@+id/like_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:paddingBottom="2dp"
-                android:text="19"
-                app:layout_constraintStart_toEndOf="@+id/icon_like"
-                app:layout_constraintTop_toBottomOf="@+id/content"/>
-
-        <ImageView
-                android:id="@+id/icon_comment"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_comment"
-                app:layout_constraintStart_toEndOf="@+id/like_count"
-                app:layout_constraintTop_toBottomOf="@+id/content"/>
-
-        <TextView
-                android:id="@+id/comment_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:paddingBottom="2dp"
-                android:text="12"
-                app:layout_constraintStart_toEndOf="@+id/icon_comment"
-                app:layout_constraintTop_toBottomOf="@+id/content"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/content_text_container"
+                android:id="@+id/content_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/comment_count">
-
-            <TextView
-                    android:id="@+id/content_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-            />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-                android:id="@+id/advertiser_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:hint="advertiser"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/call_to_action_view"
-                app:layout_constraintTop_toBottomOf="@+id/content_text_container"
-                app:layout_constraintBottom_toBottomOf="parent"
-        />
-
-        <Button
-                android:id="@+id/call_to_action_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:hint="action"
-                app:layout_constraintTop_toBottomOf="@+id/content_text_container"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/advertiser_view"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </io.adrop.ads.nativeAd.AdropNativeAdView>
