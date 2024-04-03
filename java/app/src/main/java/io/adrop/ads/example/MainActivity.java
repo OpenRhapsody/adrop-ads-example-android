@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.interstitial_example).setOnClickListener(v -> start(InterstitialExampleActivity.class));
         findViewById(R.id.rewarded_example).setOnClickListener(v -> start(RewardedAdExampleActivity.class));
         findViewById(R.id.native_example).setOnClickListener(v -> start(NativeExampleActivity.class));
+        findViewById(R.id.property_example).setOnClickListener(v -> start(PropertyActivity.class));
     }
 
     private void start(Class<?> cls) {
