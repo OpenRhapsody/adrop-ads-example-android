@@ -2,7 +2,9 @@ package io.adrop.ads.example
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import io.adrop.ads.metrics.AdropEventParam
 import io.adrop.ads.metrics.AdropMetrics
 import io.adrop.ads.model.AdropKey
 import io.adrop.ads.model.AdropValue
@@ -24,6 +26,8 @@ class PropertyActivity : AppCompatActivity() {
         findViewById<Button>(R.id.d2010111).setOnClickListener { birth("2010111") }
         findViewById<Button>(R.id.d2005).setOnClickListener { birth("2005") }
         findViewById<Button>(R.id.d199101).setOnClickListener { birth("199101") }
+
+        findViewById<Button>(R.id.custom_event).setOnClickListener { sendEvent() }
     }
 
     private fun gender(value: String) {
@@ -36,5 +40,17 @@ class PropertyActivity : AppCompatActivity() {
 
     private fun birth(value: String) {
         AdropMetrics.setProperty(AdropKey.BIRTH, value)
+    }
+
+    private fun sendEvent() {
+        val name = "event_name"
+        val params = AdropEventParam.Builder()
+            .putInt("data_key_1", 1)
+            .putFloat("data_key_2", 1.2f)
+            .putBoolean("data_key_3", true)
+            .putString("data_key_4", "value_text")
+            .build()
+        Log.d("Adrop", "Send Custom Event - name: $name, params: $params")
+        AdropMetrics.logEvent(name, params)
     }
 }

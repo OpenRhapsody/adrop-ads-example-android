@@ -23,10 +23,11 @@
             android:fillViewport="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gender">
+
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                android:orientation="horizontal">
 
             <Button
                     android:id="@+id/male"
@@ -65,7 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gender_buttons"
             android:layout_marginTop="4dp"
-    />
+            />
 
     <Button
             android:id="@+id/fixed_18"
@@ -74,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/fixed_age"
             app:layout_constraintStart_toStartOf="parent"
             android:text="18"
-    />
+            />
 
     <Button
             android:id="@+id/fixed_35"
@@ -84,7 +85,7 @@
             app:layout_constraintStart_toEndOf="@+id/fixed_18"
             android:layout_marginLeft="4dp"
             android:text="35"
-    />
+            />
 
     <Button
             android:id="@+id/fixed_47"
@@ -94,7 +95,7 @@
             app:layout_constraintStart_toEndOf="@+id/fixed_35"
             android:layout_marginLeft="4dp"
             android:text="47"
-    />
+            />
 
     <TextView
             android:id="@+id/birth"
@@ -104,7 +105,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fixed_18"
             android:layout_marginTop="4dp"
-    />
+            />
 
     <Button
             android:id="@+id/d2010111"
@@ -113,7 +114,7 @@
             app:layout_constraintTop_toBottomOf="@+id/birth"
             app:layout_constraintStart_toStartOf="parent"
             android:text="2010111"
-    />
+            />
 
     <Button
             android:id="@+id/d2005"
@@ -123,7 +124,7 @@
             app:layout_constraintStart_toEndOf="@+id/d2010111"
             android:layout_marginLeft="4dp"
             android:text="2005"
-    />
+            />
 
     <Button
             android:id="@+id/d199101"
@@ -133,6 +134,24 @@
             app:layout_constraintStart_toEndOf="@+id/d2005"
             android:layout_marginLeft="4dp"
             android:text="199101"
-    />
+            />
+
+    <TextView
+            android:id="@+id/event"
+            android:text="Custom Event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/d2010111"
+            android:layout_marginTop="16dp"/>
+
+    <Button
+            android:id="@+id/custom_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="send event"
+            app:layout_constraintTop_toBottomOf="@+id/event"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="4dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

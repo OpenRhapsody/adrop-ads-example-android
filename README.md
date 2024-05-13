@@ -58,12 +58,12 @@ To use Adrop in your Android app, you need to register your app with your Adrop 
 
     Kotlin (build.gradle.kts)
     ```
-    implementation("io.adrop:adrop-ads:0.4.0")
+    implementation("io.adrop:adrop-ads:0.4.2")
     ```
 
     Groovy (build.gradle)
     ```
-    implementation "io.adrop:adrop-ads:0.4.0"
+    implementation "io.adrop:adrop-ads:0.4.2"
     ```
 
 2. After adding the dependency, sync your Android project with Gradle files.
@@ -84,7 +84,9 @@ To use Adrop in your Android app, you need to register your app with your Adrop 
         
         // 1. use Application Context
         // 2. true for production
-        Adrop.initialize(application, production = false)
+        // 3. If you are using this SDK in specific countries, 
+        //    pass an array of ISO 3166 alpha-2 country codes.
+        Adrop.initialize(application, production = false, arrayOf())
     }
     ```
     
@@ -100,8 +102,11 @@ To use Adrop in your Android app, you need to register your app with your Adrop 
         
         // 1. use Application Context
         // 2. true for production
+        // 3. If you are using this SDK in specific countries, 
+        //    pass an array of ISO 3166 alpha-2 country codes.
         boolean production = true;
-        Adrop.INSTANCE.initialize(getApplication(), production);
+        String[] targetCountries = {};
+        Adrop.INSTANCE.initialize(getApplication(), production, targetCountries);
     }
     ```
 
