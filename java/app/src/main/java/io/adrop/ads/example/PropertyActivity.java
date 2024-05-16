@@ -30,6 +30,8 @@ public class PropertyActivity extends AppCompatActivity {
         findViewById(R.id.d199101).setOnClickListener(v -> birth("199101"));
 
         findViewById(R.id.custom_event).setOnClickListener(v -> sendEvent());
+        findViewById(R.id.custom_event_name).setOnClickListener(v -> sendEventNameOnly());
+
     }
 
     private void gender(String value) {
@@ -55,5 +57,11 @@ public class PropertyActivity extends AppCompatActivity {
 
         Log.d("Adrop", String.format("Send Custom Event - name: %s, params: %s", name, params));
         AdropMetrics.logEvent(name, params);
+    }
+
+    private void sendEventNameOnly() {
+        String name = "event_name";
+        Log.d("Adrop", String.format("Send Custom Event - name: %s", name));
+        AdropMetrics.logEvent(name, null);
     }
 }

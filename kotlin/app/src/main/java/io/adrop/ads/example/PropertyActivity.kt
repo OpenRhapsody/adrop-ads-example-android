@@ -28,6 +28,7 @@ class PropertyActivity : AppCompatActivity() {
         findViewById<Button>(R.id.d199101).setOnClickListener { birth("199101") }
 
         findViewById<Button>(R.id.custom_event).setOnClickListener { sendEvent() }
+        findViewById<Button>(R.id.custom_event_name).setOnClickListener { sendEventNameOnly() }
     }
 
     private fun gender(value: String) {
@@ -52,5 +53,11 @@ class PropertyActivity : AppCompatActivity() {
             .build()
         Log.d("Adrop", "Send Custom Event - name: $name, params: $params")
         AdropMetrics.logEvent(name, params)
+    }
+
+    private fun sendEventNameOnly() {
+        val name = "event_name"
+        Log.d("Adrop", "Send Custom Event - name: $name")
+        AdropMetrics.logEvent(name)
     }
 }
