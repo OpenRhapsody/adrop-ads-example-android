@@ -58,12 +58,12 @@ To use Adrop in your Android app, you need to register your app with your Adrop 
 
     Kotlin (build.gradle.kts)
     ```
-    implementation("io.adrop:adrop-ads:0.4.3")
+    implementation("io.adrop:adrop-ads:0.4.4")
     ```
 
     Groovy (build.gradle)
     ```
-    implementation "io.adrop:adrop-ads:0.4.3"
+    implementation "io.adrop:adrop-ads:0.4.4"
     ```
 
 2. After adding the dependency, sync your Android project with Gradle files.
