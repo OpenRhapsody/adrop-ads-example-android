@@ -13,6 +13,7 @@ Prerequisites
 * Uses [Jetpack (AndroidX)](https://developer.android.com/jetpack/androidx/migrate), which includes meeting these version requirements:
   * ```com.android.tools.build:gradle``` v7.3.0 or later
   * ```compileSdkVersion``` 33
+* Kotlin 1.8.20 or higher
 * [Sign into Adrop](https://adrop.io) using your email or Google account.
 
 ---
