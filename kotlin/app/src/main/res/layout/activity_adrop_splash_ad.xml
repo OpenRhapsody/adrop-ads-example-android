@@ -4,7 +4,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
-        android:paddingHorizontal="24dp">
+        android:paddingHorizontal="24dp"
+        android:fitsSystemWindows="true">
 
     <!-- Replace your logo -->
     <ImageView
