@@ -29,11 +29,11 @@ class InterstitialExampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interstitial_example)
 
-        btnShow = findViewById<Button>(R.id.show)
-        btnReset = findViewById<Button>(R.id.reset)
-        btnResetInvalid = findViewById<Button>(R.id.reset_invalid)
-        tvErrorCode = findViewById<TextView>(R.id.interstitial_error_code)
-        tvErrorDesc = findViewById<TextView>(R.id.interstitial_error_code_desc)
+        btnShow = findViewById(R.id.show)
+        btnReset = findViewById(R.id.reset)
+        btnResetInvalid = findViewById(R.id.reset_invalid)
+        tvErrorCode = findViewById(R.id.interstitial_error_code)
+        tvErrorDesc = findViewById(R.id.interstitial_error_code_desc)
 
         findViewById<View>(R.id.load).setOnClickListener {
             interstitialAd?.load()

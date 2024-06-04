@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import io.adrop.ads.Adrop;
+import io.adrop.ads.splash.AdropSplashAd;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.rewarded_example).setOnClickListener(v -> start(RewardedAdExampleActivity.class));
         findViewById(R.id.native_example).setOnClickListener(v -> start(NativeExampleActivity.class));
         findViewById(R.id.property_example).setOnClickListener(v -> start(PropertyActivity.class));
+        findViewById(R.id.popup_example).setOnClickListener(v -> start(PopupExampleActivity.class));
     }
 
     private void start(Class<?> cls) {

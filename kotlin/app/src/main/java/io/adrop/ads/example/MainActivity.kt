@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.interstitial_example).setOnClickListener { start(InterstitialExampleActivity::class.java) }
         findViewById<View>(R.id.rewarded_example).setOnClickListener { start(RewardedAdExampleActivity::class.java) }
         findViewById<View>(R.id.native_example).setOnClickListener {start(NativeExampleActivity::class.java) }
+        findViewById<View>(R.id.popup_example).setOnClickListener {start(PopupExampleActivity::class.java) }
         findViewById<View>(R.id.property_example).setOnClickListener {start(PropertyActivity::class.java) }
     }
 

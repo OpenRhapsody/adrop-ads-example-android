@@ -25,6 +25,8 @@ public class ErrorUtils {
                 return "There is no ad received";
             case ERROR_CODE_AD_SHOWN:
                 return "This ad was shown already";
+            case ERROR_CODE_AD_HIDE_FOR_TODAY:
+                return "You can't load ad for today.";
             default:
                 return "";
         }
