@@ -45,6 +45,10 @@ class BannerExampleActivity : AppCompatActivity() {
                 tvErrorCode.text = null
             }
 
+            override fun onAdImpression(banner: AdropBanner) {
+                Log.d("adrop", "banner impressed " + banner.getUnitId())
+            }
+
             override fun onAdClicked(clickedBanner: AdropBanner) {
                 Log.d("adrop", "banner clicked " + clickedBanner.getUnitId())
             }

@@ -51,6 +51,11 @@ public class BannerExampleActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onAdImpression(AdropBanner adropBanner) {
+                Log.d("adrop", "banner impressed " + adropBanner.getUnitId());
+            }
+
+            @Override
             public void onAdClicked(AdropBanner clickedBanner) {
                 Log.d("adrop", "banner clicked " + clickedBanner.getUnitId());
             }
