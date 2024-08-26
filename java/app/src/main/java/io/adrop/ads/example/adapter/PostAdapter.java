@@ -3,8 +3,11 @@ package io.adrop.ads.example.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import io.adrop.ads.example.R;
 import io.adrop.ads.nativeAd.AdropNativeAd;
 import io.adrop.ads.nativeAd.AdropNativeAdView;
@@ -45,10 +48,24 @@ public class PostAdapter extends RecyclerView.Adapter {
         }
 
         public void onBindView(AdropNativeAd nativeAd) {
-            nativeAdView.setIconView(itemView.findViewById(R.id.profile), null);
-            nativeAdView.setAdvertiserView(itemView.findViewById(R.id.title), null);
+            ImageView iconView = itemView.findViewById(R.id.profile);
+
+            Glide.with(itemView).load(nativeAd.getProfile().getDisplayLogo()).into(iconView);
+            nativeAdView.setProfileLogoView(iconView, null);
+
+            TextView nameView = itemView.findViewById(R.id.title);
+            nameView.setText(nativeAd.getProfile().getDisplayName());
+            nativeAdView.setProfileNameView(nameView, null);
+
+            TextView headlineView = itemView.findViewById(R.id.headline);
+            headlineView.setText(nativeAd.getHeadline());
+            nativeAdView.setHeadLineView(headlineView, null);
+
+            TextView bodyView = itemView.findViewById(R.id.content_text);
+            bodyView.setText(nativeAd.getBody());
+            nativeAdView.setBodyView(bodyView);
+
             nativeAdView.setMediaView(itemView.findViewById(R.id.content));
-            nativeAdView.setBodyView(itemView.findViewById(R.id.content_text));
             nativeAdView.setNativeAd(nativeAd);
         }
     }
