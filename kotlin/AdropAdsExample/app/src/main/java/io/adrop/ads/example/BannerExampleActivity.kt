@@ -35,31 +35,32 @@ class BannerExampleActivity : AppCompatActivity() {
         if (banner != null) {
             banner?.destroy()
         }
-        banner = AdropBanner(this, unitId)
-        banner?.listener = object : AdropBannerListener {
-            override fun onAdReceived(receivedBanner: AdropBanner) {
-                Log.d("adrop", "banner received " + receivedBanner.getUnitId())
-                bannerContainer.removeAllViews()
-                bannerContainer.addView(receivedBanner)
-                tvErrorDesc.text = null
-                tvErrorCode.text = null
-            }
+        banner = AdropBanner(this, unitId).apply {
+            listener = object : AdropBannerListener {
+                override fun onAdReceived(receivedBanner: AdropBanner) {
+                    Log.d("adrop", "banner received " + receivedBanner.getUnitId())
+                    bannerContainer.removeAllViews()
+                    bannerContainer.addView(receivedBanner)
+                    tvErrorDesc.text = null
+                    tvErrorCode.text = null
+                }
 
-            override fun onAdImpression(banner: AdropBanner) {
-                Log.d("adrop", "banner impressed " + banner.getUnitId())
-            }
+                override fun onAdImpression(banner: AdropBanner) {
+                    Log.d("adrop", "banner impressed ${banner.getUnitId()}")
+                }
 
-            override fun onAdClicked(clickedBanner: AdropBanner) {
-                Log.d("adrop", "banner clicked " + clickedBanner.getUnitId())
-            }
+                override fun onAdClicked(clickedBanner: AdropBanner) {
+                    Log.d("adrop", "banner clicked ${clickedBanner.getUnitId()}")
+                }
 
-            override fun onAdFailedToReceive(failedBanner: AdropBanner, errorCode: AdropErrorCode) {
-                Log.d("adrop", "banner failed to receive " + failedBanner.getUnitId() + ", " + errorCode)
-                tvErrorCode.text = errorCode.name
-                tvErrorDesc.text = ErrorUtils.descriptionOf(errorCode)
+                override fun onAdFailedToReceive(failedBanner: AdropBanner, errorCode: AdropErrorCode) {
+                    Log.d("adrop", "banner failed to receive ${failedBanner.getUnitId()}, $errorCode")
+                    tvErrorCode.text = errorCode.name
+                    tvErrorDesc.text = ErrorUtils.descriptionOf(errorCode)
+                }
             }
+            load()
         }
-        banner?.load()
     }
 
     override fun onDestroy() {
