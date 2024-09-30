@@ -2,6 +2,7 @@ package io.adrop.ads.example;
 
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import io.adrop.ads.metrics.AdropEventParam;
@@ -16,34 +17,30 @@ public class PropertyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property);
 
-        findViewById(R.id.male).setOnClickListener(v -> gender(AdropValue.AdropGender.MALE));
-        findViewById(R.id.female).setOnClickListener(v -> gender(AdropValue.AdropGender.FEMALE));
-        findViewById(R.id.other).setOnClickListener(v -> gender(AdropValue.AdropGender.OTHER));
-        findViewById(R.id.g_unknown).setOnClickListener(v -> gender(AdropValue.UNKNOWN));
-
-        findViewById(R.id.fixed_18).setOnClickListener(v -> age(18));
-        findViewById(R.id.fixed_35).setOnClickListener(v -> age(35));
-        findViewById(R.id.fixed_47).setOnClickListener(v -> age(47));
-
-        findViewById(R.id.d2010111).setOnClickListener(v -> birth("2010111"));
-        findViewById(R.id.d2005).setOnClickListener(v -> birth("2005"));
-        findViewById(R.id.d199101).setOnClickListener(v -> birth("199101"));
-
+        findViewById(R.id.set_property).setOnClickListener(v -> sendProperty());
         findViewById(R.id.custom_event).setOnClickListener(v -> sendEvent());
         findViewById(R.id.custom_event_name).setOnClickListener(v -> sendEventNameOnly());
-
     }
 
-    private void gender(String value) {
-        AdropMetrics.setProperty(AdropKey.GENDER, value);
-    }
+    private void sendProperty() {
+        String key = ((EditText) findViewById(R.id.key_edit)).getText().toString();
+        String value = ((EditText) findViewById(R.id.value_edit)).getText().toString();
 
-    private void age(int value) {
-        AdropMetrics.setProperty(AdropKey.AGE, String.valueOf(value));
-    }
-
-    private void birth(String value) {
-        AdropMetrics.setProperty(AdropKey.BIRTH, value);
+        if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+            AdropMetrics.setProperty(key, Boolean.parseBoolean(value));
+        } else {
+            try {
+                int intValue = Integer.parseInt(value);
+                AdropMetrics.setProperty(key, intValue);
+            } catch (NumberFormatException e1) {
+                try {
+                    double doubleValue = Double.parseDouble(value);
+                    AdropMetrics.setProperty(key, doubleValue);
+                } catch (NumberFormatException e2) {
+                    AdropMetrics.setProperty(key, value);
+                }
+            }
+        }
     }
 
     private void sendEvent() {
