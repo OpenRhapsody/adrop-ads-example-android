@@ -26,7 +26,9 @@ public class PropertyActivity extends AppCompatActivity {
         String key = ((EditText) findViewById(R.id.key_edit)).getText().toString();
         String value = ((EditText) findViewById(R.id.value_edit)).getText().toString();
 
-        if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+        if (value.isEmpty()) {
+            AdropMetrics.setProperty(key, null);
+        } else if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
             AdropMetrics.setProperty(key, Boolean.parseBoolean(value));
         } else {
             try {

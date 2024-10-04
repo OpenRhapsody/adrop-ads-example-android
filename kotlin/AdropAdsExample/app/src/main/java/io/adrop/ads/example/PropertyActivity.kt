@@ -24,7 +24,9 @@ class PropertyActivity : AppCompatActivity() {
         val key = findViewById<EditText>(R.id.key_edit).text.toString()
         val value = findViewById<EditText>(R.id.value_edit).text.toString()
 
-        if (value.equals("true", ignoreCase = true) || value.equals("false", ignoreCase = true)) {
+        if (value.isEmpty()) {
+            AdropMetrics.setProperty(key, null)
+        } else if (value.equals("true", ignoreCase = true) || value.equals("false", ignoreCase = true)) {
             AdropMetrics.setProperty(key, value.toBoolean())
         } else if (value.toIntOrNull() != null) {
             AdropMetrics.setProperty(key, value.toInt())
