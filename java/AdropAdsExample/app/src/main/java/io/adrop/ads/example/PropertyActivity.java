@@ -32,14 +32,16 @@ public class PropertyActivity extends AppCompatActivity {
             AdropMetrics.setProperty(key, Boolean.parseBoolean(value));
         } else {
             try {
-                int intValue = Integer.parseInt(value);
-                AdropMetrics.setProperty(key, intValue);
-            } catch (NumberFormatException e1) {
+                AdropMetrics.setProperty(key, Long.parseLong(value));
+            } catch (NumberFormatException e) {
                 try {
-                    double doubleValue = Double.parseDouble(value);
-                    AdropMetrics.setProperty(key, doubleValue);
-                } catch (NumberFormatException e2) {
-                    AdropMetrics.setProperty(key, value);
+                    AdropMetrics.setProperty(key, Integer.parseInt(value));
+                } catch (NumberFormatException e1) {
+                    try {
+                        AdropMetrics.setProperty(key, Double.parseDouble(value));
+                    } catch (NumberFormatException e2) {
+                        AdropMetrics.setProperty(key, value);
+                    }
                 }
             }
         }
@@ -52,6 +54,7 @@ public class PropertyActivity extends AppCompatActivity {
                 .putFloat("data_key_2", 1.2f)
                 .putBoolean("data_key_3", true)
                 .putString("data_key_4", "value_text")
+                .putLong("data_key_5", 100L)
                 .build();
 
         Log.d("Adrop", String.format("Send Custom Event - name: %s, params: %s", name, params));

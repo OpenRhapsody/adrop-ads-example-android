@@ -30,6 +30,8 @@ class PropertyActivity : AppCompatActivity() {
             AdropMetrics.setProperty(key, value.toBoolean())
         } else if (value.toIntOrNull() != null) {
             AdropMetrics.setProperty(key, value.toInt())
+        } else if (value.toLongOrNull() != null) {
+            AdropMetrics.setProperty(key, value.toLong())
         } else if (value.toDoubleOrNull() != null) {
             AdropMetrics.setProperty(key, value.toDouble())
         } else {
@@ -44,6 +46,7 @@ class PropertyActivity : AppCompatActivity() {
             .putFloat("data_key_2", 1.2f)
             .putBoolean("data_key_3", true)
             .putString("data_key_4", "value_text")
+            .putLong("data_key_5", 100L)
             .build()
         Log.d("Adrop", "Send Custom Event - name: $name, params: $params")
         AdropMetrics.logEvent(name, params)
