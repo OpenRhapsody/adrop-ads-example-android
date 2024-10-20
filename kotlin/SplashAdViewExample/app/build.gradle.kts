@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.splashadviewexample"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.splashadviewexample"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -42,5 +42,5 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
-    implementation("io.adrop:adrop-ads:0.7.6")
+    implementation("io.adrop:adrop-ads:0.8.0")
 }

@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "io.adrop.ads.example"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "io.adrop.ads.example"
         minSdk = 23
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -47,5 +47,5 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation("io.adrop:adrop-ads:0.7.6")
+    implementation("io.adrop:adrop-ads:0.8.0")
 }
