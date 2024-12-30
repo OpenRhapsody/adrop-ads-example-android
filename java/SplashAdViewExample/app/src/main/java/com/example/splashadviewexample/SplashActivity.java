@@ -24,11 +24,11 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_activity);
 
-        Adrop.INSTANCE.initialize(getApplication(), false);
+        Adrop.initialize(getApplication(), false);
 
         FrameLayout adFrame = findViewById(R.id.ad_area);
 
-        AdropSplashAdView splashAd = new AdropSplashAdView(this, "PUBLIC_TEST_UNIT_ID_SPLASH");
+        AdropSplashAdView splashAd = new AdropSplashAdView(this, "PUBLIC_TEST_UNIT_ID_SPLASH", 1000);
         adFrame.addView(splashAd);
         splashAd.setDisplayDuration(displayDuration);
         splashAd.setListener(new AdropSplashAdViewListener() {

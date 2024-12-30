@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import io.adrop.ads.Adrop;
-import io.adrop.ads.splash.AdropSplashAd;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Adrop.INSTANCE.initialize(getApplication(), false);
+        Adrop.initialize(getApplication(), false);
 
         setButtons();
     }
