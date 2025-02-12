@@ -11,7 +11,7 @@ Prerequisites
   * Uses Android 6.0 or higher
     * minSdkVersion 23
 * Uses [Jetpack (AndroidX)](https://developer.android.com/jetpack/androidx/migrate), which includes meeting these version requirements:
-  * ```com.android.tools.build:gradle``` v7.3.0 or later
+  * ```com.android.tools.build:gradle``` v7.4.2 or later
   * ```compileSdkVersion``` 34
 * Kotlin 1.8.20 or higher
 * [Sign into Adrop](https://adrop.io) using your email or Google account.
@@ -59,12 +59,12 @@ To use Adrop in your Android app, you need to register your app with your Adrop 
 
     Kotlin (build.gradle.kts)
     ```
-    implementation("io.adrop:adrop-ads:1.1.4")
+    implementation("io.adrop:adrop-ads:1.1.5")
     ```
 
     Groovy (build.gradle)
     ```
-    implementation "io.adrop:adrop-ads:1.1.4"
+    implementation "io.adrop:adrop-ads:1.1.5"
     ```
 
 2. After adding the dependency, sync your Android project with Gradle files.
