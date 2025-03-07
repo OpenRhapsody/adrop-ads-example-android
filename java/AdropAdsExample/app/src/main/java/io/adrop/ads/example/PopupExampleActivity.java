@@ -1,5 +1,6 @@
 package io.adrop.ads.example;
 
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import io.adrop.ads.example.helper.ErrorUtils;
 import io.adrop.ads.model.AdropErrorCode;
 import io.adrop.ads.popupAd.AdropPopupAd;
+import io.adrop.ads.popupAd.AdropPopupAdCloseListener;
 import io.adrop.ads.popupAd.AdropPopupAdListener;
 
 public class PopupExampleActivity extends AppCompatActivity {
@@ -103,6 +105,22 @@ public class PopupExampleActivity extends AppCompatActivity {
             @Override
             public void onAdFailedToShowFullScreen(AdropPopupAd adropPopupAd, AdropErrorCode adropErrorCode) {
                 setError(adropErrorCode);
+            }
+        });
+        popupAd.setCloseListener(new AdropPopupAdCloseListener() {
+            @Override
+            public void onClosed(AdropPopupAd adropPopupAd) {
+                Log.d("adrop", "popup ad closed");
+            }
+
+            @Override
+            public void onDimClicked(AdropPopupAd adropPopupAd) {
+                Log.d("adrop", "popup ad dim clicked");
+            }
+
+            @Override
+            public void onTodayOffClicked(AdropPopupAd adropPopupAd) {
+                Log.d("adrop", "popup ad today off clicked");
             }
         });
 

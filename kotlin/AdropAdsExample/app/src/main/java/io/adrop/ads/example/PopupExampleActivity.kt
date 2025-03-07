@@ -1,6 +1,7 @@
 package io.adrop.ads.example
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import io.adrop.ads.example.helper.ErrorUtils.descriptionOf
 import io.adrop.ads.model.AdropErrorCode
 import io.adrop.ads.popupAd.AdropPopupAd
+import io.adrop.ads.popupAd.AdropPopupAdCloseListener
 import io.adrop.ads.popupAd.AdropPopupAdListener
 
 class PopupExampleActivity : AppCompatActivity() {
@@ -74,6 +76,19 @@ class PopupExampleActivity : AppCompatActivity() {
             override fun onAdDidDismissFullScreen(adropPopupAd: AdropPopupAd) {}
             override fun onAdFailedToShowFullScreen(adropPopupAd: AdropPopupAd, adropErrorCode: AdropErrorCode) {
                 setError(adropErrorCode)
+            }
+        }
+        popupAd?.closeListener = object: AdropPopupAdCloseListener {
+            override fun onTodayOffClicked(ad: AdropPopupAd) {
+                Log.d("adrop", "popup ad today off clicked")
+            }
+
+            override fun onDimClicked(ad: AdropPopupAd) {
+                Log.d("adrop", "popup ad dim clicked")
+            }
+
+            override fun onClosed(ad: AdropPopupAd) {
+                Log.d("adrop", "popup ad closed")
             }
         }
         btnShow.setEnabled(false)
