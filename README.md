@@ -26,7 +26,7 @@ Adding Adrop to your app involves tasks both in the [Adrop console](https://adro
 
 ### Step 1: Create a Adrop project
 
-Before you can add Adrop to your Android app, you need to [create a Adrop project](https://adrop.gitbook.io/adrop-docs/guides/get-started-with-adrop#create-a-app-container-publisher-project) to connect to your Android app.
+Before you can add Adrop to your Android app, you need to [create a Adrop project](https://help.adrop.io/publisher-guide/start-ads-platform) to connect to your Android app.
 
 ### Step 2: Register your app with Adrop
 
@@ -131,7 +131,7 @@ From the [Adrop console](https://adrop.io/projects), go to project, then select 
 To create a new Ad unit:
 1. From the left navigation menu, select **Ad Units**.
 2. Select **Create Ad unit** to bring up the ad unit builder.
-3. Enter an Ad unit name, then select your app (iOS or Android) and [Ad format](https://adrop.gitbook.io/adrop-docs/guides/create-your-ad-unit#a-d-formats) (Banner, Interstitial, or Rewarded).
+3. Enter an Ad unit name, then select your app (iOS or Android) and [Ad format](https://help.adrop.io/publisher-guide/ads-builder) (Banner, Interstitial, Rewarded, Native, Popup, or Splash).
 4. Select **Create** to save your Ad unit.
 
 ### Ad unit ID
