@@ -22,7 +22,7 @@ Prerequisites
 
 Add Adrop using the Adrop console
 ---
-Adding Adrop to your app involves tasks both in the [Adrop console](https://adrop.io/projects) and in your open Android project (for example, you download Adrop config files from the console, then move them into your Android project).
+Adding Adrop to your app involves tasks both in the [Adrop console](https://adrop.io) and in your open Android project (for example, you download Adrop config files from the console, then move them into your Android project).
 
 ### Step 1: Create a Adrop project
 
@@ -36,7 +36,7 @@ To use Adrop in your Android app, you need to register your app with your Adrop 
 > 
 > Make sure to enter the package name that your app is actually using. The package name value is case-sensitive, and it cannot be changed for this Adrop Android app after it's registered with your Adrop project.
 
-1. Go to the [Adrop console](http://adrop.io/projects).
+1. Go to the [Adrop console](http://adrop.io).
 2. In the center of the project app page, click the **Android** icon button to launch the setup workflow.
 3. Enter your app's package name in the **Android package name** field
    * A [package name](https://developer.android.com/studio/build/application-id) uniquely identifies your app on the device and in the Google Play Store
@@ -122,7 +122,7 @@ Create your Ad unit
 
 ### 
 
-From the [Adrop console](https://adrop.io/projects), go to project, then select Ad unit in the left navigation menu to create and manage Ad units. Ad units are containers you place in your apps to show ads to users. Ad units send ad requests to Adrop, then display the ads they receive to fill the request. When you create an ad unit, you assign it an ad format and ad type(s).
+From the [Adrop console](https://adrop.io), go to project, then select Ad unit in the left navigation menu to create and manage Ad units. Ad units are containers you place in your apps to show ads to users. Ad units send ad requests to Adrop, then display the ads they receive to fill the request. When you create an ad unit, you assign it an ad format and ad type(s).
 
 ---
 
