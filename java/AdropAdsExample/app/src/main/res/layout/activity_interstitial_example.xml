@@ -84,7 +84,7 @@
             android:id="@+id/load_invalid_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="reset InterstitialAd, you can be received ad successfully when click load button"
+            android:text="reset InterstitialAd, you can be received error code when click load button"
             android:paddingHorizontal="8dp"
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/reset_invalid"

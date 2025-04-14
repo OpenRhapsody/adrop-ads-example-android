@@ -13,6 +13,7 @@ import io.adrop.ads.model.AdropErrorCode
 
 class BannerExampleActivity : AppCompatActivity() {
     private val PUBLIC_TEST_UNIT_ID_320_80 = "PUBLIC_TEST_UNIT_ID_375_80"
+    private val PUBLIC_TEST_UNIT_ID_CAROUSEL = "PUBLIC_TEST_UNIT_ID_CAROUSEL"
 
     private val INVALID_UNIT_ID = "INVALID_UNIT_ID"
 
@@ -28,6 +29,7 @@ class BannerExampleActivity : AppCompatActivity() {
         tvErrorDesc = findViewById(R.id.banner_error_code_desc)
         bannerContainer = findViewById(R.id.banner_container)
         findViewById<View>(R.id.load).setOnClickListener { _ -> load(PUBLIC_TEST_UNIT_ID_320_80) }
+        findViewById<View>(R.id.load_carousel).setOnClickListener { _ -> load(PUBLIC_TEST_UNIT_ID_CAROUSEL)}
         findViewById<View>(R.id.load_invalid).setOnClickListener { _ -> load(INVALID_UNIT_ID) }
     }
 

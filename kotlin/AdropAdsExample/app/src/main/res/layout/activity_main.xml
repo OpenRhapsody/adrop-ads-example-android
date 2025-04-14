@@ -31,13 +31,22 @@
             android:layout_marginTop="12dp"/>
 
     <Button
+            android:id="@+id/quest_banner_example"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quest Banner Example"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/banner_example"/>
+
+    <Button
             android:id="@+id/interstitial_example"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Interstitial Example"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/banner_example"/>
+            app:layout_constraintTop_toBottomOf="@id/quest_banner_example"/>
 
     <Button
             android:id="@+id/rewarded_example"

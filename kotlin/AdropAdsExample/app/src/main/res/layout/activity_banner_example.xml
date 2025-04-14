@@ -45,11 +45,35 @@
     />
 
     <Button
+            android:id="@+id/load_carousel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/load_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="load banner! (carousel ad)"
+            android:layout_margin="12dp"
+            />
+
+    <TextView
+            android:id="@+id/load_carousel_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="load carousel banner, you can be received ad successfully when click load button"
+            android:paddingHorizontal="8dp"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/load_carousel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="6dp"
+            />
+
+    <Button
             android:id="@+id/load_invalid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/load_description"
+            app:layout_constraintTop_toBottomOf="@+id/load_carousel_description"
             app:layout_constraintStart_toStartOf="parent"
             android:text="load banner! (empty ad)"
             android:layout_margin="12dp"
@@ -59,7 +83,7 @@
             android:id="@+id/load_invalid_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="load banner, you can be received ad successfully when click load button"
+            android:text="load invalid banner, you can be received error code when click button"
             android:paddingHorizontal="8dp"
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/load_invalid"

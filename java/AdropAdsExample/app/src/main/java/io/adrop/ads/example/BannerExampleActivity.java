@@ -16,6 +16,7 @@ import io.adrop.ads.model.AdropErrorCode;
 public class BannerExampleActivity extends AppCompatActivity {
 
     private final String PUBLIC_TEST_UNIT_ID_320_80 = "PUBLIC_TEST_UNIT_ID_375_80";
+    private final String PUBLIC_TEST_UNIT_ID_CAROUSEL = "PUBLIC_TEST_UNIT_ID_CAROUSEL";
     private final String INVALID_UNIT_ID = "INVALID_UNIT_ID";
 
     private TextView tvErrorCode;
@@ -34,6 +35,7 @@ public class BannerExampleActivity extends AppCompatActivity {
         bannerContainer = findViewById(R.id.banner_container);
 
         findViewById(R.id.load).setOnClickListener(v -> load(PUBLIC_TEST_UNIT_ID_320_80));
+        findViewById(R.id.load_carousel).setOnClickListener(v -> load(PUBLIC_TEST_UNIT_ID_CAROUSEL));
         findViewById(R.id.load_invalid).setOnClickListener(v -> load(INVALID_UNIT_ID));
     }
 
