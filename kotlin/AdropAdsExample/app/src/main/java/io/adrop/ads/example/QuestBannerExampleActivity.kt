@@ -20,7 +20,7 @@ class QuestBannerExampleActivity : AppCompatActivity() {
     lateinit var feedContainer: FrameLayout
     lateinit var coverContainer: FrameLayout
 
-    private val TEST_CHANNEL = "timestamp"
+    private val TEST_CHANNEL = "adrop"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
