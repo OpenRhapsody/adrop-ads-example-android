@@ -59,6 +59,11 @@ public class NativeExampleActivity extends AppCompatActivity {
                 Log.d("adrop", String.format("native ad failed to receive, %s", adropErrorCode));
                 Toast.makeText(NativeExampleActivity.this, ErrorUtils.descriptionOf(adropErrorCode), Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            public void onAdImpression(AdropNativeAd adropNativeAd) {
+                Log.d("adrop", "native ad impression");
+            }
         });
 
         nativeAd.load();

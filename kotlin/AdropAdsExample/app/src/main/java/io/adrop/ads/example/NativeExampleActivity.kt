@@ -55,6 +55,10 @@ class NativeExampleActivity : AppCompatActivity() {
                 Log.d("adrop", "native ad failed to receive, $errorCode")
                 Toast.makeText(this@NativeExampleActivity, ErrorUtils.descriptionOf(errorCode), Toast.LENGTH_SHORT).show()
             }
+
+            override fun onAdImpression(ad: AdropNativeAd) {
+                Log.d("adrop", "native ad impression")
+            }
         }
         nativeAd?.load()
     }
