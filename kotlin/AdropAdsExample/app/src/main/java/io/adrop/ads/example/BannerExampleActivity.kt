@@ -40,7 +40,7 @@ class BannerExampleActivity : AppCompatActivity() {
         banner = AdropBanner(this, unitId).apply {
             listener = object : AdropBannerListener {
                 override fun onAdReceived(receivedBanner: AdropBanner) {
-                    Log.d("adrop", "banner received " + receivedBanner.getUnitId())
+                    Log.d("adrop", "banner received " + receivedBanner.getUnitId() + " size: " + receivedBanner.creativeSize.width + "x" + receivedBanner.creativeSize.height)
                     bannerContainer.removeAllViews()
                     bannerContainer.addView(receivedBanner)
                     tvErrorDesc.text = null

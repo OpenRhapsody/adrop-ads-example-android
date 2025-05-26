@@ -47,7 +47,7 @@ public class BannerExampleActivity extends AppCompatActivity {
         banner.setListener(new AdropBannerListener() {
             @Override
             public void onAdReceived(AdropBanner receivedBanner) {
-                Log.d("adrop", String.format("banner received: %s", receivedBanner.getUnitId()));
+                Log.d("adrop", String.format("banner received: %s, creativeSize: %f x %f", receivedBanner.getUnitId(), receivedBanner.getCreativeSize().getWidth(), receivedBanner.getCreativeSize().getHeight()));
                 bannerContainer.removeAllViews();
                 bannerContainer.addView(receivedBanner);
                 tvErrorDesc.setText(null);
