@@ -22,6 +22,7 @@ import io.adrop.ads.nativeAd.AdropNativeAdListener;
 public class NativeExampleActivity extends AppCompatActivity {
 
     String NATIVE_UNIT_ID = "PUBLIC_TEST_UNIT_ID_NATIVE";
+    String CONTEXT_ID = ""; // Optional context ID for the banner, can be left empty
     ProgressBar progressBar;
     RecyclerView recyclerView;
     AdropNativeAd nativeAd;
@@ -40,7 +41,7 @@ public class NativeExampleActivity extends AppCompatActivity {
     }
 
     private void load() {
-        nativeAd = new AdropNativeAd(this, NATIVE_UNIT_ID);
+        nativeAd = new AdropNativeAd(this, NATIVE_UNIT_ID, CONTEXT_ID);
         nativeAd.setListener(new AdropNativeAdListener() {
             @Override
             public void onAdReceived(AdropNativeAd adropNativeAd) {

@@ -17,6 +17,7 @@ import io.adrop.ads.nativeAd.AdropNativeAdListener
 
 class NativeExampleActivity : AppCompatActivity() {
     private val NATIVE_UNIT_ID = "PUBLIC_TEST_UNIT_ID_NATIVE"
+    private val CONTEXT_ID = "" // Optional context ID for the banner, can be left empty
 
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
@@ -39,7 +40,7 @@ class NativeExampleActivity : AppCompatActivity() {
     }
 
     private fun load() {
-        nativeAd = AdropNativeAd(this, NATIVE_UNIT_ID)
+        nativeAd = AdropNativeAd(this, NATIVE_UNIT_ID, CONTEXT_ID)
         nativeAd?.listener = object : AdropNativeAdListener {
             override fun onAdReceived(ad: AdropNativeAd) {
                 Log.d("adrop", "native ad received")

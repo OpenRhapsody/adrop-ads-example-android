@@ -17,6 +17,8 @@ class BannerExampleActivity : AppCompatActivity() {
 
     private val INVALID_UNIT_ID = "INVALID_UNIT_ID"
 
+    private val CONTEXT_ID = "" // Optional context ID for the banner, can be left empty
+
     lateinit var tvErrorCode: TextView
     lateinit var tvErrorDesc: TextView
     lateinit var bannerContainer: FrameLayout
@@ -37,7 +39,7 @@ class BannerExampleActivity : AppCompatActivity() {
         if (banner != null) {
             banner?.destroy()
         }
-        banner = AdropBanner(this, unitId).apply {
+        banner = AdropBanner(this, unitId, CONTEXT_ID).apply {
             listener = object : AdropBannerListener {
                 override fun onAdReceived(receivedBanner: AdropBanner) {
                     Log.d("adrop", "banner received " + receivedBanner.getUnitId() + " size: " + receivedBanner.creativeSize.width + "x" + receivedBanner.creativeSize.height)

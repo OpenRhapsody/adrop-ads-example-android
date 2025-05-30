@@ -19,6 +19,8 @@ public class BannerExampleActivity extends AppCompatActivity {
     private final String PUBLIC_TEST_UNIT_ID_CAROUSEL = "PUBLIC_TEST_UNIT_ID_CAROUSEL";
     private final String INVALID_UNIT_ID = "INVALID_UNIT_ID";
 
+    private final String CONTEXT_ID = ""; // Optional context ID for the banner, can be left empty
+
     private TextView tvErrorCode;
     private TextView tvErrorDesc;
     private FrameLayout bannerContainer;
@@ -43,7 +45,7 @@ public class BannerExampleActivity extends AppCompatActivity {
         if (banner != null) {
             banner.destroy();
         }
-        banner = new AdropBanner(this, unitId);
+        banner = new AdropBanner(this, unitId, CONTEXT_ID);
         banner.setListener(new AdropBannerListener() {
             @Override
             public void onAdReceived(AdropBanner receivedBanner) {
