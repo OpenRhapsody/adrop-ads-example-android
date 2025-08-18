@@ -59,12 +59,12 @@ To use Adrop in your Android app, you need to register your app with your Adrop 
 
     Kotlin (build.gradle.kts)
     ```
-    implementation("io.adrop:adrop-ads:1.3.20")
+    implementation("io.adrop:adrop-ads:1.4.0")
     ```
 
     Groovy (build.gradle)
     ```
-    implementation "io.adrop:adrop-ads:1.3.20"
+    implementation "io.adrop:adrop-ads:1.4.0"
     ```
 
 2. After adding the dependency, sync your Android project with Gradle files.
@@ -148,3 +148,13 @@ The Ad unit’s unique identifier to reference in your code. This setting is rea
 > * PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM
 > * PUBLIC_TEST_UNIT_ID_POPUP_CENTER
 > * PUBLIC_TEST_UNIT_ID_SPLASH
+
+> **video ad units for test**
+> * PUBLIC_TEST_UNIT_ID_BANNER_VIDEO_16_9
+> * PUBLIC_TEST_UNIT_ID_BANNER_VIDEO_9_16
+> * PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM_VIDEO_16_9
+> * PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM_VIDEO_9_16
+> * PUBLIC_TEST_UNIT_ID_POPUP_CENTER_VIDEO_16_9
+> * PUBLIC_TEST_UNIT_ID_POPUP_CENTER_VIDEO_9_16
+> * PUBLIC_TEST_UNIT_ID_NATIVE_VIDEO_16_9
+> * PUBLIC_TEST_UNIT_ID_NATIVE_VIDEO_9_16
