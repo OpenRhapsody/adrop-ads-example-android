@@ -2,10 +2,9 @@
 <ScrollView 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BannerExampleActivity">
+    tools:context=".BannerVideoExampleActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +16,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="다양한 사이즈 배너 광고"
+            android:text="동영상 배너 광고"
             android:textSize="20sp"
             android:textAlignment="center"
             android:textStyle="bold"
@@ -27,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="광고 미리 로드하여 빠른 표시"
+            android:text="다양한 비율의 동영상 광고를 미리 로드하여 표시합니다"
             android:textSize="14sp"
             android:textAlignment="center"
             android:layout_marginBottom="24dp"
@@ -40,52 +39,42 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/load_320x50"
+                android:id="@+id/load_video_16_9"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="64dp"
                 android:layout_weight="1"
-                android:text="320x50"
-                android:layout_marginEnd="4dp"/>
+                android:text="16:9 비율\n(가로형)"
+                android:textSize="12sp"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@android:color/holo_blue_dark"/>
 
             <Button
-                android:id="@+id/load_375x80"
+                android:id="@+id/load_video_9_16"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="64dp"
                 android:layout_weight="1"
-                android:text="375x80"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"/>
-
-            <Button
-                android:id="@+id/load_320x100"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:text="320x100"
-                android:layout_marginStart="4dp"/>
+                android:text="9:16 비율\n(세로형)"
+                android:textSize="12sp"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@android:color/holo_green_dark"/>
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/load_carousel"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="캐러셀 배너"
-            android:layout_marginTop="8dp"/>
-
-        <Button
-            android:id="@+id/load_invalid"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="잘못된 유닛 ID (오류 테스트)"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@android:color/holo_red_light"/>
+            android:layout_height="wrap_content"
+            android:text="• 동영상 광고는 자동으로 재생됩니다\n• 광고 클릭 시 랜딩 페이지로 이동합니다\n• 미리 로드로 빠른 표시가 가능합니다"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
+            android:padding="12dp"
+            android:background="@android:color/background_light"
+            android:textColor="@android:color/darker_gray"/>
 
         <TextView
             android:id="@+id/ad_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="로드된 광고 정보가 여기에 표시됩니다"
+            android:text="동영상 광고 정보가 여기에 표시됩니다"
             android:textAlignment="center"
             android:layout_marginTop="16dp"
             android:padding="8dp"
@@ -112,7 +101,7 @@
         <FrameLayout
             android:id="@+id/banner_container"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="180dp"
             android:layout_marginTop="16dp"
             android:background="@android:color/background_dark"
             android:padding="4dp">
@@ -120,7 +109,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="광고가 여기에 표시됩니다\n(Ad will be displayed here)"
+                android:text="동영상 광고가 여기에 표시됩니다\n(Video ads will be displayed here)"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textColor="@android:color/white"

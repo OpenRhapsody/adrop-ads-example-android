@@ -66,8 +66,9 @@
     <Button
             android:id="@+id/custom_event"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="send event with data"
+            android:layout_height="48dp"
+            android:text="데이터와 함께\n이벤트 전송"
+            android:textSize="12sp"
             app:layout_constraintTop_toBottomOf="@+id/event"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="4dp"/>
@@ -75,8 +76,9 @@
     <Button
             android:id="@+id/custom_event_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="send event only name"
+            android:layout_height="48dp"
+            android:text="이벤트 이름만\n전송"
+            android:textSize="12sp"
             app:layout_constraintTop_toBottomOf="@+id/custom_event"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="4dp"/>

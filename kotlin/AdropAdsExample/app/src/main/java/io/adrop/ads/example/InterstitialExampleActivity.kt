@@ -3,7 +3,6 @@ package io.adrop.ads.example
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import io.adrop.ads.example.helper.ErrorUtils
@@ -13,91 +12,144 @@ import io.adrop.ads.model.AdropErrorCode
 
 class InterstitialExampleActivity : AppCompatActivity() {
     private val PUBLIC_TEST_UNIT_ID_INTERSTITIAL = "PUBLIC_TEST_UNIT_ID_INTERSTITIAL"
-
     private val INVALID_UNIT_ID = "INVALID_UNIT_ID"
 
     lateinit var tvErrorCode: TextView
     lateinit var tvErrorDesc: TextView
-    lateinit var btnShow: Button
-    lateinit var btnReset: Button
-    lateinit var btnResetInvalid: Button
-    var isLoaded = false
-    var isShown = false
-    var interstitialAd: AdropInterstitialAd? = null
+    lateinit var tvAdInfo: TextView
+    
+    private var interstitialAd: AdropInterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_interstitial_example)
 
-        btnShow = findViewById(R.id.show)
-        btnReset = findViewById(R.id.reset)
-        btnResetInvalid = findViewById(R.id.reset_invalid)
         tvErrorCode = findViewById(R.id.interstitial_error_code)
         tvErrorDesc = findViewById(R.id.interstitial_error_code_desc)
+        tvAdInfo = findViewById(R.id.ad_info)
 
-        findViewById<View>(R.id.load).setOnClickListener {
-            interstitialAd?.load()
-        }
-        findViewById<View>(R.id.show).setOnClickListener {
-            interstitialAd?.show(this)
-        }
-        btnReset.setOnClickListener { reset(PUBLIC_TEST_UNIT_ID_INTERSTITIAL) }
-        btnResetInvalid.setOnClickListener { reset(INVALID_UNIT_ID) }
-        reset(PUBLIC_TEST_UNIT_ID_INTERSTITIAL)
+        setButtons()
+        preloadInterstitialAd()
     }
 
-    private fun reset(unitId: String) {
-        interstitialAd?.destroy()
-        interstitialAd = AdropInterstitialAd(this, unitId)
-        interstitialAd?.interstitialAdListener = object : AdropInterstitialAdListener {
-            override fun onAdFailedToShowFullScreen(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
-                setError(errorCode)
-            }
+    private fun setButtons() {
+        findViewById<View>(R.id.show_interstitial).setOnClickListener { showInterstitialAd() }
+        findViewById<View>(R.id.show_invalid).setOnClickListener { loadAndShowInvalidAd() }
+    }
 
-            override fun onAdDidDismissFullScreen(ad: AdropInterstitialAd) {}
-            override fun onAdWillDismissFullScreen(ad: AdropInterstitialAd) {}
-            override fun onAdDidPresentFullScreen(ad: AdropInterstitialAd) {
-                isShown = true
-                btnReset.isEnabled = true
-                btnResetInvalid.isEnabled = true
-            }
+    private fun preloadInterstitialAd() {
+        tvAdInfo.text = "전면 광고 미리 로드 중..."
+        
+        interstitialAd = AdropInterstitialAd(this, PUBLIC_TEST_UNIT_ID_INTERSTITIAL).apply {
+            interstitialAdListener = object : AdropInterstitialAdListener {
+                override fun onAdReceived(ad: AdropInterstitialAd) {
+                    Log.d("adrop", "전면 광고 미리 로드 완료: ${ad.unitId}")
+                    updateAdInfo("전면 광고 미리 로드 완료 - 즉시 표시 가능")
+                }
 
-            override fun onAdWillPresentFullScreen(ad: AdropInterstitialAd) {}
-            override fun onAdClicked(ad: AdropInterstitialAd) {
-                Log.d("adrop", "InterstitialAd clicked " + ad.unitId)
-            }
+                override fun onAdFailedToReceive(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
+                    Log.e("adrop", "전면 광고 미리 로드 실패: ${ad.unitId}, $errorCode")
+                    updateAdInfo("전면 광고 로드 실패")
+                    setError(errorCode)
+                }
 
-            override fun onAdImpression(ad: AdropInterstitialAd) {
-                Log.d("adrop", "InterstitialAd impression " + ad.unitId)
-            }
+                override fun onAdImpression(ad: AdropInterstitialAd) {
+                    Log.d("adrop", "전면 광고 노출: ${ad.unitId}")
+                }
 
-            override fun onAdReceived(ad: AdropInterstitialAd) {
-                Log.d("adrop", "InterstitialAd received " + ad.unitId)
-                isLoaded = true
-                btnShow.isEnabled = true
-            }
+                override fun onAdClicked(ad: AdropInterstitialAd) {
+                    Log.d("adrop", "전면 광고 클릭: ${ad.unitId}")
+                }
 
-            override fun onAdFailedToReceive(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
-                setError(errorCode)
+                override fun onAdWillPresentFullScreen(ad: AdropInterstitialAd) {
+                    Log.d("adrop", "전면 광고 표시 예정")
+                }
+
+                override fun onAdDidPresentFullScreen(ad: AdropInterstitialAd) {
+                    Log.d("adrop", "전면 광고 표시 완료")
+                    clearError()
+                }
+
+                override fun onAdWillDismissFullScreen(ad: AdropInterstitialAd) {
+                    Log.d("adrop", "전면 광고 닫기 예정")
+                }
+
+                override fun onAdDidDismissFullScreen(ad: AdropInterstitialAd) {
+                    Log.d("adrop", "전면 광고 닫힘")
+                    // 새로운 광고 미리 로드
+                    preloadNewAd()
+                }
+
+                override fun onAdFailedToShowFullScreen(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
+                    Log.e("adrop", "전면 광고 표시 실패: ${ad.unitId}, $errorCode")
+                    setError(errorCode)
+                }
+            }
+            load()
+        }
+    }
+
+    private fun showInterstitialAd() {
+        if (interstitialAd != null) {
+            interstitialAd?.show(this)
+        } else {
+            tvErrorCode.text = "NO_AD_AVAILABLE"
+            tvErrorDesc.text = "미리 로드된 전면 광고가 없습니다."
+        }
+    }
+
+    private fun preloadNewAd() {
+        // 광고 표시 후 새로운 광고 미리 로드
+        interstitialAd = AdropInterstitialAd(this, PUBLIC_TEST_UNIT_ID_INTERSTITIAL).apply {
+            interstitialAdListener = interstitialAd?.interstitialAdListener
+            load()
+        }
+        updateAdInfo("새로운 전면 광고 로드 중...")
+    }
+
+    private fun loadAndShowInvalidAd() {
+        val invalidAd = AdropInterstitialAd(this, INVALID_UNIT_ID).apply {
+            interstitialAdListener = object : AdropInterstitialAdListener {
+                override fun onAdReceived(ad: AdropInterstitialAd) {
+                    Log.d("adrop", "잘못된 광고 로드됨 (발생하지 않아야 함): ${ad.unitId}")
+                    ad.show(this@InterstitialExampleActivity)
+                }
+
+                override fun onAdFailedToReceive(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
+                    Log.d("adrop", "잘못된 광고 로드 실패 (예상된 결과): ${ad.unitId}, $errorCode")
+                    setError(errorCode)
+                }
+
+                override fun onAdImpression(ad: AdropInterstitialAd) {}
+                override fun onAdClicked(ad: AdropInterstitialAd) {}
+                override fun onAdWillPresentFullScreen(ad: AdropInterstitialAd) {}
+                override fun onAdDidPresentFullScreen(ad: AdropInterstitialAd) {}
+                override fun onAdWillDismissFullScreen(ad: AdropInterstitialAd) {}
+                override fun onAdDidDismissFullScreen(ad: AdropInterstitialAd) {}
+                override fun onAdFailedToShowFullScreen(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
+                    setError(errorCode)
+                }
             }
         }
-        btnShow.isEnabled = false
-        btnReset.isEnabled = false
-        btnResetInvalid.isEnabled = false
-        tvErrorDesc.text = null
-        tvErrorCode.text = null
+        invalidAd.load()
+    }
+
+    private fun updateAdInfo(message: String) {
+        tvAdInfo.text = message
     }
 
     private fun setError(code: AdropErrorCode?) {
         if (code != null) {
             tvErrorCode.text = code.name
             tvErrorDesc.text = ErrorUtils.descriptionOf(code)
-            btnReset.isEnabled = true
-            btnResetInvalid.isEnabled = true
         } else {
-            tvErrorCode.text = null
-            tvErrorDesc.text = null
+            clearError()
         }
+    }
+
+    private fun clearError() {
+        tvErrorCode.text = null
+        tvErrorDesc.text = null
     }
 
     override fun onDestroy() {

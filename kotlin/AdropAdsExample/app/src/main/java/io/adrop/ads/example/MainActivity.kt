@@ -17,13 +17,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setButtons() {
-        findViewById<View>(R.id.banner_example).setOnClickListener { start(BannerExampleActivity::class.java) }
+        findViewById<View>(R.id.banner_multiple_sizes).setOnClickListener { start(BannerExampleActivity::class.java) }
+        findViewById<View>(R.id.banner_video).setOnClickListener { start(BannerVideoExampleActivity::class.java) }
         findViewById<View>(R.id.quest_banner_example).setOnClickListener { start(QuestBannerExampleActivity::class.java) }
         findViewById<View>(R.id.interstitial_example).setOnClickListener { start(InterstitialExampleActivity::class.java) }
         findViewById<View>(R.id.rewarded_example).setOnClickListener { start(RewardedAdExampleActivity::class.java) }
-        findViewById<View>(R.id.native_example).setOnClickListener {start(NativeExampleActivity::class.java) }
-        findViewById<View>(R.id.popup_example).setOnClickListener {start(PopupExampleActivity::class.java) }
-        findViewById<View>(R.id.property_example).setOnClickListener {start(PropertyActivity::class.java) }
+        findViewById<View>(R.id.native_example).setOnClickListener { start(NativeExampleActivity::class.java) }
+        findViewById<View>(R.id.popup_example).setOnClickListener { start(PopupExampleActivity::class.java) }
+        findViewById<View>(R.id.property_example).setOnClickListener { start(PropertyActivity::class.java) }
     }
 
     private fun start(cls: Class<*>) {

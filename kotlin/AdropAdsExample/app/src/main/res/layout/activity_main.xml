@@ -1,86 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
         tools:context="io.adrop.ads.example.MainActivity">
 
-    <TextView
+        <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Adrop Ads Example"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="24dp"
-    />
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"
+            android:textColor="@android:color/black"/>
 
-    <Button
-            android:id="@+id/banner_example"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Banner Example"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            android:layout_marginTop="12dp"/>
+            android:text="배너 광고 (Banner Ads)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/holo_blue_dark"/>
 
-    <Button
+        <Button
+            android:id="@+id/banner_multiple_sizes"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="다양한 사이즈 배너 광고"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/banner_video"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="동영상 배너 광고"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
             android:id="@+id/quest_banner_example"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quest Banner Example"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/banner_example"/>
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="캐러셀 배너 광고"
+            android:layout_marginBottom="16dp"/>
 
-    <Button
-            android:id="@+id/interstitial_example"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Interstitial Example"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/quest_banner_example"/>
+            android:text="팝업 광고 (Popup Ads)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/holo_orange_dark"/>
 
-    <Button
-            android:id="@+id/rewarded_example"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rewarded Example"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/interstitial_example"/>
-
-    <Button
-            android:id="@+id/native_example"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Native Example"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rewarded_example"/>
-    <Button
+        <Button
             android:id="@+id/popup_example"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Popup Example"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/native_example"/>
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="팝업 광고 (다양한 사이즈)"
+            android:layout_marginBottom="16dp"/>
 
-    <Button
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="전면 광고 (Interstitial Ads)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/holo_red_dark"/>
+
+        <Button
+            android:id="@+id/interstitial_example"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="전면 광고"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="네이티브 광고 (Native Ads)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/holo_green_dark"/>
+
+        <Button
+            android:id="@+id/native_example"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="네이티브 광고 (동영상 포함)"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="보상형 광고 (Rewarded Ads)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/purple_700"/>
+
+        <Button
+            android:id="@+id/rewarded_example"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="보상형 광고"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="기타 (Others)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/darker_gray"/>
+
+        <Button
             android:id="@+id/property_example"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Property Example"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/popup_example"/>
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="속성 설정 예제"
+            android:layout_marginBottom="8dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</ScrollView>

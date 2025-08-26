@@ -34,6 +34,15 @@
                 android:name=".BannerExampleActivity"
                 android:exported="false"/>
         <activity
+                android:name=".BannerVideoExampleActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".SplashExampleActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".HelpCenterActivity"
+                android:exported="false"/>
+        <activity
                 android:name=".MainActivity"
                 android:exported="true">
         </activity>

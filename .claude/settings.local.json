@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew:*)",
+      "Bash(emulator:*)",
+      "Bash(adb install:*)",
+      "Bash(adb shell am start:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
