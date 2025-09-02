@@ -4,7 +4,8 @@
       "Bash(./gradlew:*)",
       "Bash(emulator:*)",
       "Bash(adb install:*)",
-      "Bash(adb shell am start:*)"
+      "Bash(adb shell am start:*)",
+      "Bash(adb:*)"
     ],
     "deny": [],
     "ask": []

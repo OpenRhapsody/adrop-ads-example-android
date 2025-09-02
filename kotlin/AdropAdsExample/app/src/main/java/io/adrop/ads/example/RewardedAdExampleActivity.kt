@@ -32,27 +32,32 @@ class RewardedAdExampleActivity : AppCompatActivity() {
         tvRewardInfo = findViewById(R.id.reward_info)
 
         setButtons()
-        preloadRewardedAd()
         updateRewardInfo()
     }
 
     private fun setButtons() {
-        findViewById<View>(R.id.show_rewarded).setOnClickListener { showRewardedAd() }
+        findViewById<View>(R.id.show_rewarded).setOnClickListener { loadAndShowRewardedAd() }
         findViewById<View>(R.id.show_invalid).setOnClickListener { loadAndShowInvalidAd() }
     }
 
-    private fun preloadRewardedAd() {
-        tvAdInfo.text = "보상형 광고 미리 로드 중..."
+
+    private fun loadAndShowRewardedAd() {
+        updateAdInfo("보상형 광고 로드 중...")
+        clearError()
         
         rewardedAd = AdropRewardedAd(this, PUBLIC_TEST_UNIT_ID_REWARDED).apply {
             rewardedAdListener = object : AdropRewardedAdListener {
                 override fun onAdReceived(ad: AdropRewardedAd) {
-                    Log.d("adrop", "보상형 광고 미리 로드 완료: ${ad.unitId}")
-                    updateAdInfo("보상형 광고 미리 로드 완료 - 즉시 표시 가능")
+                    Log.d("adrop", "보상형 광고 로드 완료: ${ad.unitId}")
+                    updateAdInfo("보상형 광고 로드 완료 - 표시 중")
+                    ad.show(this@RewardedAdExampleActivity) { type: Int, amount: Int ->
+                        Log.d("adrop", "보상 지급 - 타입: $type, 수량: $amount")
+                        giveReward(type, amount)
+                    }
                 }
 
                 override fun onAdFailedToReceive(ad: AdropRewardedAd, errorCode: AdropErrorCode) {
-                    Log.e("adrop", "보상형 광고 미리 로드 실패: ${ad.unitId}, $errorCode")
+                    Log.e("adrop", "보상형 광고 로드 실패: ${ad.unitId}, $errorCode")
                     updateAdInfo("보상형 광고 로드 실패")
                     setError(errorCode)
                 }
@@ -80,8 +85,6 @@ class RewardedAdExampleActivity : AppCompatActivity() {
 
                 override fun onAdDidDismissFullScreen(ad: AdropRewardedAd) {
                     Log.d("adrop", "보상형 광고 닫힘")
-                    // 새로운 광고 미리 로드
-                    preloadNewRewardedAd()
                 }
 
                 override fun onAdFailedToShowFullScreen(ad: AdropRewardedAd, errorCode: AdropErrorCode) {
@@ -90,18 +93,6 @@ class RewardedAdExampleActivity : AppCompatActivity() {
                 }
             }
             load()
-        }
-    }
-
-    private fun showRewardedAd() {
-        if (rewardedAd != null) {
-            rewardedAd?.show(this) { type: Int, amount: Int ->
-                Log.d("adrop", "보상 지급 - 타입: $type, 수량: $amount")
-                giveReward(type, amount)
-            }
-        } else {
-            tvErrorCode.text = "NO_AD_AVAILABLE"
-            tvErrorDesc.text = "미리 로드된 보상형 광고가 없습니다."
         }
     }
 
@@ -122,13 +113,6 @@ class RewardedAdExampleActivity : AppCompatActivity() {
         }
     }
 
-    private fun preloadNewRewardedAd() {
-        rewardedAd = AdropRewardedAd(this, PUBLIC_TEST_UNIT_ID_REWARDED).apply {
-            rewardedAdListener = rewardedAd?.rewardedAdListener
-            load()
-        }
-        updateAdInfo("새로운 보상형 광고 로드 중...")
-    }
 
     private fun loadAndShowInvalidAd() {
         val invalidAd = AdropRewardedAd(this, INVALID_UNIT_ID).apply {

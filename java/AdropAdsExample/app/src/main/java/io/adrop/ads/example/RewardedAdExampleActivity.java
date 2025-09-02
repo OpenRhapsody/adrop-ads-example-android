@@ -41,60 +41,38 @@ public class RewardedAdExampleActivity extends AppCompatActivity {
         tvErrorCode = findViewById(R.id.rewarded_error_code);
         tvErrorDesc = findViewById(R.id.rewarded_error_code_desc);
 
-        findViewById(R.id.load).setOnClickListener(v -> {
-            if (rewardedAd != null) {
-                rewardedAd.load();
-            }
-        });
-        findViewById(R.id.show).setOnClickListener(v -> {
-            if (rewardedAd != null) {
-                rewardedAd.show(this, (type, amount) -> {
+        findViewById(R.id.load).setOnClickListener(v -> loadAndShowAd(PUBLIC_TEST_UNIT_ID_REWARDED));
+        findViewById(R.id.show).setOnClickListener(v -> loadAndShowAd(PUBLIC_TEST_UNIT_ID_REWARDED));
+        btnReset.setOnClickListener(v -> loadAndShowAd(PUBLIC_TEST_UNIT_ID_REWARDED));
+        btnResetInvalid.setOnClickListener(v -> loadAndShowAd(INVALID_UNIT_ID));
+    }
+
+    private void loadAndShowAd(String unitId) {
+        Log.d("adrop", "Starting to load rewarded ad with unitId: " + unitId);
+        
+        // Clear previous error state
+        tvErrorCode.setText(null);
+        tvErrorDesc.setText(null);
+        
+        if (rewardedAd != null) {
+            rewardedAd.destroy();
+        }
+        
+        rewardedAd = new AdropRewardedAd(this, unitId);
+        rewardedAd.setRewardedAdListener(new AdropRewardedAdListener() {
+            @Override
+            public void onAdReceived(@NotNull AdropRewardedAd ad) {
+                Log.d("adrop", String.format("rewarded ad received %s", ad.getUnitId()));
+                ad.show(RewardedAdExampleActivity.this, (type, amount) -> {
                     Log.d("adrop", String.format("RewardedAd earn rewards / type: %d, amount: %d ", type, amount));
                     return null;
                 });
             }
-        });
-        btnReset.setOnClickListener(v -> reset(PUBLIC_TEST_UNIT_ID_REWARDED));
-        btnResetInvalid.setOnClickListener(v -> reset(INVALID_UNIT_ID));
-        reset(PUBLIC_TEST_UNIT_ID_REWARDED);
-    }
 
-    private void reset(String unitId) {
-        if (rewardedAd != null) {
-            rewardedAd.destroy();
-        }
-        rewardedAd = new AdropRewardedAd(this, unitId);
-        rewardedAd.setRewardedAdListener(new AdropRewardedAdListener() {
             @Override
-            public void onAdFailedToShowFullScreen(@NotNull AdropRewardedAd ad, @NotNull AdropErrorCode errorCode) {
+            public void onAdFailedToReceive(@NotNull AdropRewardedAd ad, @NotNull AdropErrorCode errorCode) {
+                Log.e("adrop", "Rewarded ad failed to load: " + ad.getUnitId());
                 setError(errorCode);
-            }
-
-            @Override
-            public void onAdDidDismissFullScreen(@NotNull AdropRewardedAd ad) {
-                Log.d("adrop", String.format("rewarded ad dismiss screen %s", ad.getUnitId()));
-            }
-
-            @Override
-            public void onAdWillDismissFullScreen(@NotNull AdropRewardedAd ad) {
-            }
-
-            @Override
-            public void onAdDidPresentFullScreen(@NotNull AdropRewardedAd ad) {
-                isShown = true;
-                btnReset.setEnabled(true);
-                btnResetInvalid.setEnabled(true);
-                tvErrorCode.setText(null);
-                tvErrorDesc.setText(null);
-            }
-
-            @Override
-            public void onAdWillPresentFullScreen(@NotNull AdropRewardedAd ad) {
-            }
-
-            @Override
-            public void onAdClicked(@NotNull AdropRewardedAd ad) {
-                Log.d("adrop", String.format("rewarded ad click %s", ad.getUnitId()));
             }
 
             @Override
@@ -103,22 +81,36 @@ public class RewardedAdExampleActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdReceived(@NotNull AdropRewardedAd ad) {
-                Log.d("adrop", String.format("rewarded ad received %s", ad.getUnitId()));
-                isLoaded = true;
-                btnShow.setEnabled(true);
+            public void onAdClicked(@NotNull AdropRewardedAd ad) {
+                Log.d("adrop", String.format("rewarded ad click %s", ad.getUnitId()));
             }
 
             @Override
-            public void onAdFailedToReceive(@NotNull AdropRewardedAd ad, @NotNull AdropErrorCode errorCode) {
+            public void onAdWillPresentFullScreen(@NotNull AdropRewardedAd ad) {
+            }
+
+            @Override
+            public void onAdDidPresentFullScreen(@NotNull AdropRewardedAd ad) {
+                tvErrorCode.setText(null);
+                tvErrorDesc.setText(null);
+            }
+
+            @Override
+            public void onAdWillDismissFullScreen(@NotNull AdropRewardedAd ad) {
+            }
+
+            @Override
+            public void onAdDidDismissFullScreen(@NotNull AdropRewardedAd ad) {
+                Log.d("adrop", String.format("rewarded ad dismiss screen %s", ad.getUnitId()));
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreen(@NotNull AdropRewardedAd ad, @NotNull AdropErrorCode errorCode) {
                 setError(errorCode);
             }
         });
-        btnShow.setEnabled(false);
-        btnReset.setEnabled(false);
-        btnResetInvalid.setEnabled(false);
-        tvErrorDesc.setText(null);
-        tvErrorCode.setText(null);
+        
+        rewardedAd.load();
     }
 
     private void setError(AdropErrorCode code) {

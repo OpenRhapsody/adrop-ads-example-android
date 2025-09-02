@@ -41,56 +41,35 @@ public class InterstitialExampleActivity extends AppCompatActivity {
         tvErrorCode = findViewById(R.id.interstitial_error_code);
         tvErrorDesc = findViewById(R.id.interstitial_error_code_desc);
 
-        findViewById(R.id.load).setOnClickListener(v -> {
-            if (interstitialAd != null) {
-                interstitialAd.load();
-            }
-        });
-        findViewById(R.id.show).setOnClickListener(v -> {
-            if (interstitialAd != null) {
-                interstitialAd.show(this);
-            }
-        });
-        btnReset.setOnClickListener(v -> reset(PUBLIC_TEST_UNIT_ID_INTERSTITIAL));
-        btnResetInvalid.setOnClickListener(v -> reset(INVALID_UNIT_ID));
-        reset(PUBLIC_TEST_UNIT_ID_INTERSTITIAL);
+        findViewById(R.id.load).setOnClickListener(v -> loadAndShowAd(PUBLIC_TEST_UNIT_ID_INTERSTITIAL));
+        findViewById(R.id.show).setOnClickListener(v -> loadAndShowAd(PUBLIC_TEST_UNIT_ID_INTERSTITIAL));
+        btnReset.setOnClickListener(v -> loadAndShowAd(PUBLIC_TEST_UNIT_ID_INTERSTITIAL));
+        btnResetInvalid.setOnClickListener(v -> loadAndShowAd(INVALID_UNIT_ID));
     }
 
-    private void reset(String unitId) {
+    private void loadAndShowAd(String unitId) {
+        Log.d("adrop", "Starting to load interstitial ad with unitId: " + unitId);
+        
+        // Clear previous error state
+        tvErrorCode.setText(null);
+        tvErrorDesc.setText(null);
+        
         if (interstitialAd != null) {
             interstitialAd.destroy();
         }
+        
         interstitialAd = new AdropInterstitialAd(this, unitId);
         interstitialAd.setInterstitialAdListener(new AdropInterstitialAdListener() {
             @Override
-            public void onAdFailedToShowFullScreen(@NotNull AdropInterstitialAd ad, @NotNull AdropErrorCode errorCode) {
+            public void onAdReceived(@NotNull AdropInterstitialAd ad) {
+                Log.d("adrop", String.format("InterstitialAd received: %s", ad.getUnitId()));
+                ad.show(InterstitialExampleActivity.this);
+            }
+
+            @Override
+            public void onAdFailedToReceive(@NotNull AdropInterstitialAd ad, @NotNull AdropErrorCode errorCode) {
+                Log.e("adrop", "Interstitial ad failed to load: " + ad.getUnitId());
                 setError(errorCode);
-            }
-
-            @Override
-            public void onAdDidDismissFullScreen(@NotNull AdropInterstitialAd ad) {
-            }
-
-            @Override
-            public void onAdWillDismissFullScreen(@NotNull AdropInterstitialAd ad) {
-            }
-
-            @Override
-            public void onAdDidPresentFullScreen(@NotNull AdropInterstitialAd ad) {
-                isShown = true;
-                btnReset.setEnabled(true);
-                btnResetInvalid.setEnabled(true);
-                tvErrorCode.setText(null);
-                tvErrorDesc.setText(null);
-            }
-
-            @Override
-            public void onAdWillPresentFullScreen(@NotNull AdropInterstitialAd ad) {
-            }
-
-            @Override
-            public void onAdClicked(@NotNull AdropInterstitialAd ad) {
-                Log.d("adrop", String.format("InterstitialAd clicked: %s", ad.getUnitId()));
             }
 
             @Override
@@ -99,22 +78,35 @@ public class InterstitialExampleActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdReceived(@NotNull AdropInterstitialAd ad) {
-                Log.d("adrop", String.format("InterstitialAd received: %s", ad.getUnitId()));
-                isLoaded = true;
-                btnShow.setEnabled(true);
+            public void onAdClicked(@NotNull AdropInterstitialAd ad) {
+                Log.d("adrop", String.format("InterstitialAd clicked: %s", ad.getUnitId()));
             }
 
             @Override
-            public void onAdFailedToReceive(@NotNull AdropInterstitialAd ad, @NotNull AdropErrorCode errorCode) {
+            public void onAdWillPresentFullScreen(@NotNull AdropInterstitialAd ad) {
+            }
+
+            @Override
+            public void onAdDidPresentFullScreen(@NotNull AdropInterstitialAd ad) {
+                tvErrorCode.setText(null);
+                tvErrorDesc.setText(null);
+            }
+
+            @Override
+            public void onAdWillDismissFullScreen(@NotNull AdropInterstitialAd ad) {
+            }
+
+            @Override
+            public void onAdDidDismissFullScreen(@NotNull AdropInterstitialAd ad) {
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreen(@NotNull AdropInterstitialAd ad, @NotNull AdropErrorCode errorCode) {
                 setError(errorCode);
             }
         });
-        btnShow.setEnabled(false);
-        btnReset.setEnabled(false);
-        btnResetInvalid.setEnabled(false);
-        tvErrorDesc.setText(null);
-        tvErrorCode.setText(null);
+        
+        interstitialAd.load();
     }
 
     private void setError(AdropErrorCode code) {

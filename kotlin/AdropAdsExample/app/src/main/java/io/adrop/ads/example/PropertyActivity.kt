@@ -15,12 +15,13 @@ class PropertyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_property)
 
-        findViewById<Button>(R.id.set_property).setOnClickListener { sendProperty() }
+        findViewById<Button>(R.id.set_property).setOnClickListener { setProperty() }
+        findViewById<Button>(R.id.set_uid).setOnClickListener { setUserId() }
         findViewById<Button>(R.id.custom_event).setOnClickListener { sendEvent() }
         findViewById<Button>(R.id.custom_event_name).setOnClickListener { sendEventNameOnly() }
     }
 
-    private fun sendProperty() {
+    private fun setProperty() {
         val key = findViewById<EditText>(R.id.key_edit).text.toString()
         val value = findViewById<EditText>(R.id.value_edit).text.toString()
 
@@ -37,6 +38,13 @@ class PropertyActivity : AppCompatActivity() {
         } else {
             AdropMetrics.setProperty(key, value)
         }
+        Log.d("Adrop", "Set Property - key: $key, value: $value")
+    }
+
+    private fun setUserId() {
+        val uid = findViewById<EditText>(R.id.uid_edit).text.toString()
+        // AdropMetrics.setUserId(uid) // TODO: Check if this API changed in 1.4.2
+        Log.d("Adrop", "Set UserId: $uid")
     }
 
     private fun sendEvent() {

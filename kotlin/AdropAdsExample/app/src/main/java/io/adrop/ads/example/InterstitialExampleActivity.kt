@@ -29,26 +29,28 @@ class InterstitialExampleActivity : AppCompatActivity() {
         tvAdInfo = findViewById(R.id.ad_info)
 
         setButtons()
-        preloadInterstitialAd()
     }
 
     private fun setButtons() {
-        findViewById<View>(R.id.show_interstitial).setOnClickListener { showInterstitialAd() }
+        findViewById<View>(R.id.show_interstitial).setOnClickListener { loadAndShowInterstitialAd() }
         findViewById<View>(R.id.show_invalid).setOnClickListener { loadAndShowInvalidAd() }
     }
 
-    private fun preloadInterstitialAd() {
-        tvAdInfo.text = "전면 광고 미리 로드 중..."
+
+    private fun loadAndShowInterstitialAd() {
+        updateAdInfo("전면 광고 로드 중...")
+        clearError()
         
         interstitialAd = AdropInterstitialAd(this, PUBLIC_TEST_UNIT_ID_INTERSTITIAL).apply {
             interstitialAdListener = object : AdropInterstitialAdListener {
                 override fun onAdReceived(ad: AdropInterstitialAd) {
-                    Log.d("adrop", "전면 광고 미리 로드 완료: ${ad.unitId}")
-                    updateAdInfo("전면 광고 미리 로드 완료 - 즉시 표시 가능")
+                    Log.d("adrop", "전면 광고 로드 완료: ${ad.unitId}")
+                    updateAdInfo("전면 광고 로드 완료 - 표시 중")
+                    ad.show(this@InterstitialExampleActivity)
                 }
 
                 override fun onAdFailedToReceive(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
-                    Log.e("adrop", "전면 광고 미리 로드 실패: ${ad.unitId}, $errorCode")
+                    Log.e("adrop", "전면 광고 로드 실패: ${ad.unitId}, $errorCode")
                     updateAdInfo("전면 광고 로드 실패")
                     setError(errorCode)
                 }
@@ -76,8 +78,6 @@ class InterstitialExampleActivity : AppCompatActivity() {
 
                 override fun onAdDidDismissFullScreen(ad: AdropInterstitialAd) {
                     Log.d("adrop", "전면 광고 닫힘")
-                    // 새로운 광고 미리 로드
-                    preloadNewAd()
                 }
 
                 override fun onAdFailedToShowFullScreen(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
@@ -89,23 +89,6 @@ class InterstitialExampleActivity : AppCompatActivity() {
         }
     }
 
-    private fun showInterstitialAd() {
-        if (interstitialAd != null) {
-            interstitialAd?.show(this)
-        } else {
-            tvErrorCode.text = "NO_AD_AVAILABLE"
-            tvErrorDesc.text = "미리 로드된 전면 광고가 없습니다."
-        }
-    }
-
-    private fun preloadNewAd() {
-        // 광고 표시 후 새로운 광고 미리 로드
-        interstitialAd = AdropInterstitialAd(this, PUBLIC_TEST_UNIT_ID_INTERSTITIAL).apply {
-            interstitialAdListener = interstitialAd?.interstitialAdListener
-            load()
-        }
-        updateAdInfo("새로운 전면 광고 로드 중...")
-    }
 
     private fun loadAndShowInvalidAd() {
         val invalidAd = AdropInterstitialAd(this, INVALID_UNIT_ID).apply {

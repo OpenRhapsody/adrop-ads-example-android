@@ -53,20 +53,29 @@ class NativeExampleActivity : AppCompatActivity() {
     }
 
     private fun loadAndDisplayAd(unitId: String, adType: String) {
+        Log.d("adrop", "Starting to load $adType with unitId: $unitId")
         tvAdInfo.text = "$adType 광고 로드 중..."
         progressBar.visibility = View.VISIBLE
         
+        // Clear previous ad
         currentNativeAd?.destroy()
         currentNativeAd = null
+        recyclerView.adapter = null
         
         val nativeAd = AdropNativeAd(this, unitId, CONTEXT_ID).apply {
             listener = object : AdropNativeAdListener {
                 override fun onAdReceived(ad: AdropNativeAd) {
-                    Log.d("adrop", "$adType native ad received: ${ad.unitId}")
+                    Log.d("adrop", "$adType native ad received successfully: ${ad.unitId}")
+                    val isVideoAd = unitId.contains("VIDEO")
+                    Log.d("adrop", "Ad type: $adType, isVideoAd: $isVideoAd")
+                    
                     currentNativeAd = ad
-                    recyclerView.adapter = PostAdapter(ad)
+                    val adapter = PostAdapter(ad)
+                    recyclerView.adapter = adapter
                     progressBar.visibility = View.GONE
-                    tvAdInfo.text = "$adType 네이티브 광고 로드 완료 - 표시 중"
+                    tvAdInfo.text = "$adType 네이티브 광고 로드 완료 - 표시 중${if (isVideoAd) " (동영상 포함)" else ""}"
+                    
+                    Toast.makeText(this@NativeExampleActivity, "$adType 광고가 성공적으로 로드되었습니다!", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onAdClick(ad: AdropNativeAd) {
@@ -74,17 +83,77 @@ class NativeExampleActivity : AppCompatActivity() {
                 }
 
                 override fun onAdFailedToReceive(ad: AdropNativeAd, errorCode: AdropErrorCode) {
-                    Log.d("adrop", "$adType native ad failed: ${ad.unitId}, $errorCode")
+                    Log.e("adrop", "$adType native ad failed to load: ${ad.unitId}")
+                    Log.e("adrop", "Error code: $errorCode")
+                    Log.e("adrop", "Error description: ${ErrorUtils.descriptionOf(errorCode)}")
+                    
                     progressBar.visibility = View.GONE
                     tvAdInfo.text = "$adType 네이티브 광고 로드 실패: ${ErrorUtils.descriptionOf(errorCode)}"
-                    Toast.makeText(this@NativeExampleActivity, "광고 로드에 실패했습니다: ${ErrorUtils.descriptionOf(errorCode)}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@NativeExampleActivity, 
+                        "$adType 광고 로드 실패: ${ErrorUtils.descriptionOf(errorCode)}", 
+                        Toast.LENGTH_LONG).show()
+                    
+                    // Just log the error, don't do fallbacks for now
+                    Log.e("adrop", "네이티브 광고 로드 실패 - 에러 확인 필요")
                 }
 
                 override fun onAdImpression(ad: AdropNativeAd) {
-                    Log.d("adrop", "$adType native ad impression: ${ad.unitId}")
+                    Log.d("adrop", "$adType native ad impression recorded: ${ad.unitId}")
                 }
             }
         }
+        
+        Log.d("adrop", "Calling nativeAd.load() for $adType")
+        nativeAd.load()
+    }
+
+    private fun loadAndDisplayAdWithEmptyContext(unitId: String, adType: String) {
+        Log.d("adrop", "Starting to load $adType with empty context, unitId: $unitId")
+        tvAdInfo.text = "$adType 광고 로드 중..."
+        progressBar.visibility = View.VISIBLE
+        
+        // Clear previous ad
+        currentNativeAd?.destroy()
+        currentNativeAd = null
+        recyclerView.adapter = null
+        
+        val nativeAd = AdropNativeAd(this, unitId, "").apply {
+            listener = object : AdropNativeAdListener {
+                override fun onAdReceived(ad: AdropNativeAd) {
+                    Log.d("adrop", "$adType native ad received successfully: ${ad.unitId}")
+                    
+                    currentNativeAd = ad
+                    val adapter = PostAdapter(ad)
+                    recyclerView.adapter = adapter
+                    progressBar.visibility = View.GONE
+                    tvAdInfo.text = "$adType 네이티브 광고 로드 완료 - 표시 중"
+                    
+                    Toast.makeText(this@NativeExampleActivity, "$adType 광고가 성공적으로 로드되었습니다!", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onAdClick(ad: AdropNativeAd) {
+                    Log.d("adrop", "$adType native ad clicked: ${ad.unitId}")
+                }
+
+                override fun onAdFailedToReceive(ad: AdropNativeAd, errorCode: AdropErrorCode) {
+                    Log.e("adrop", "$adType native ad with empty context failed to load: ${ad.unitId}")
+                    Log.e("adrop", "Error code: $errorCode")
+                    Log.e("adrop", "Error description: ${ErrorUtils.descriptionOf(errorCode)}")
+                    
+                    progressBar.visibility = View.GONE
+                    tvAdInfo.text = "$adType 네이티브 광고 로드 실패: ${ErrorUtils.descriptionOf(errorCode)}"
+                    Toast.makeText(this@NativeExampleActivity, 
+                        "모든 네이티브 광고 로드 실패: ${ErrorUtils.descriptionOf(errorCode)}", 
+                        Toast.LENGTH_LONG).show()
+                }
+
+                override fun onAdImpression(ad: AdropNativeAd) {
+                    Log.d("adrop", "$adType native ad impression recorded: ${ad.unitId}")
+                }
+            }
+        }
+        
+        Log.d("adrop", "Calling nativeAd.load() for $adType with empty context")
         nativeAd.load()
     }
 

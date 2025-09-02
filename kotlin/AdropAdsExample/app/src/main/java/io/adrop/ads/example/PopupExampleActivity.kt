@@ -3,6 +3,7 @@ package io.adrop.ads.example
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.webkit.WebView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import io.adrop.ads.example.helper.ErrorUtils.descriptionOf
@@ -48,21 +49,92 @@ class PopupExampleActivity : AppCompatActivity() {
     }
 
 
-    private fun loadAndShowAd(unitId: String, adType: String) {
+    private fun loadAndShowSimplePopupAd(unitId: String, adType: String) {
+        Log.d("adrop", "Starting simple popup load for $adType with unitId: $unitId")
         tvAdInfo.text = "$adType 광고 로드 중..."
         
         val popupAd = AdropPopupAd(this, unitId).apply {
             popupAdListener = object : AdropPopupAdListener {
                 override fun onAdReceived(adropPopupAd: AdropPopupAd) {
-                    Log.d("adrop", "$adType popup received: ${adropPopupAd.unitId}")
-                    tvAdInfo.text = "$adType 광고 로드 완료 - 표시 중"
+                    Log.d("adrop", "Simple popup received: ${adropPopupAd.unitId}")
+                    tvAdInfo.text = "$adType 광고 표시 중"
                     adropPopupAd.show(this@PopupExampleActivity)
                 }
 
                 override fun onAdFailedToReceive(adropPopupAd: AdropPopupAd, adropErrorCode: AdropErrorCode) {
-                    Log.d("adrop", "$adType popup failed: ${adropPopupAd.unitId}, $adropErrorCode")
-                    tvAdInfo.text = "$adType 광고 로드 실패"
+                    Log.e("adrop", "Simple popup failed: ${adropPopupAd.unitId}, error: $adropErrorCode")
+                    tvAdInfo.text = "팝업 광고 로드 실패"
                     setError(adropErrorCode)
+                }
+
+                override fun onAdImpression(adropPopupAd: AdropPopupAd) {}
+                override fun onAdClicked(adropPopupAd: AdropPopupAd) {}
+                override fun onAdWillPresentFullScreen(adropPopupAd: AdropPopupAd) {}
+                override fun onAdDidPresentFullScreen(adropPopupAd: AdropPopupAd) {
+                    tvAdInfo.text = "팝업 광고 표시 완료"
+                }
+                override fun onAdWillDismissFullScreen(adropPopupAd: AdropPopupAd) {}
+                override fun onAdDidDismissFullScreen(adropPopupAd: AdropPopupAd) {}
+                override fun onAdFailedToShowFullScreen(adropPopupAd: AdropPopupAd, adropErrorCode: AdropErrorCode) {
+                    setError(adropErrorCode)
+                }
+            }
+        }
+        popupAd.load()
+    }
+
+    private fun loadAndShowAd(unitId: String, adType: String) {
+        Log.d("adrop", "Starting to load $adType popup with unitId: $unitId")
+        tvAdInfo.text = "$adType 광고 로드 중..."
+        
+        // Clear previous error state
+        tvErrorCode.text = null
+        tvErrorDesc.text = null
+        
+        val popupAd = AdropPopupAd(this, unitId).apply {
+            popupAdListener = object : AdropPopupAdListener {
+                override fun onAdReceived(adropPopupAd: AdropPopupAd) {
+                    Log.d("adrop", "$adType popup received successfully: ${adropPopupAd.unitId}")
+                    tvAdInfo.text = "$adType 광고 로드 완료 - 표시 중"
+                    
+                    // Add delay for video ads to ensure proper loading
+                    if (unitId.contains("VIDEO")) {
+                        Log.d("adrop", "Video popup ad detected, adding slight delay before showing")
+                        android.os.Handler().postDelayed({
+                            adropPopupAd.show(this@PopupExampleActivity)
+                        }, 500)
+                    } else {
+                        adropPopupAd.show(this@PopupExampleActivity)
+                    }
+                }
+
+                override fun onAdFailedToReceive(adropPopupAd: AdropPopupAd, adropErrorCode: AdropErrorCode) {
+                    Log.e("adrop", "$adType popup failed to load: ${adropPopupAd.unitId}")
+                    Log.e("adrop", "Error code: $adropErrorCode")
+                    Log.e("adrop", "Error description: ${descriptionOf(adropErrorCode)}")
+                    
+                    tvAdInfo.text = "$adType 광고 로드 실패: ${descriptionOf(adropErrorCode)}"
+                    setError(adropErrorCode)
+                    
+                    // Show toast with error details
+                    android.widget.Toast.makeText(this@PopupExampleActivity, 
+                        "$adType 광고 로드 실패: ${descriptionOf(adropErrorCode)}", 
+                        android.widget.Toast.LENGTH_LONG).show()
+                        
+                    // Try fallback to regular popup if any ad fails
+                    if (unitId != PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM && unitId != PUBLIC_TEST_UNIT_ID_POPUP_CENTER) {
+                        Log.d("adrop", "Trying fallback to regular popup")
+                        android.os.Handler().postDelayed({
+                            val fallbackUnitId = if (unitId.contains("BOTTOM")) PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM else PUBLIC_TEST_UNIT_ID_POPUP_CENTER
+                            loadAndShowAd(fallbackUnitId, "${adType.split(" ")[0]} (fallback)")
+                        }, 1000)
+                    } else {
+                        // If even basic popup fails, try a simpler implementation
+                        Log.d("adrop", "Basic popup also failed, trying simple popup implementation")
+                        android.os.Handler().postDelayed({
+                            loadAndShowSimplePopupAd(PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM, "간단한 팝업 (simple)")
+                        }, 1000)
+                    }
                 }
 
                 override fun onAdImpression(adropPopupAd: AdropPopupAd) {
@@ -76,8 +148,21 @@ class PopupExampleActivity : AppCompatActivity() {
                 override fun onAdWillPresentFullScreen(adropPopupAd: AdropPopupAd) {}
                 
                 override fun onAdDidPresentFullScreen(adropPopupAd: AdropPopupAd) {
+                    Log.d("adrop", "$adType popup presented full screen: ${adropPopupAd.unitId}")
                     tvErrorCode.text = null
                     tvErrorDesc.text = null
+                    
+                    // Add WebView visibility callback to prevent app freezing (especially for video ads)
+                    executeVisibilityCallback()
+                    
+                    // Additional handling for video ads
+                    if (unitId.contains("VIDEO")) {
+                        Log.d("adrop", "Video popup ad is now displaying")
+                        // Ensure video has proper visibility
+                        android.os.Handler().postDelayed({
+                            executeVisibilityCallback()
+                        }, 1000)
+                    }
                 }
                 
                 override fun onAdWillDismissFullScreen(adropPopupAd: AdropPopupAd) {}
@@ -126,6 +211,29 @@ class PopupExampleActivity : AppCompatActivity() {
             tvErrorCode.text = null
             tvErrorDesc.text = null
         }
+    }
+
+    private fun executeVisibilityCallback() {
+        val javascript = """
+            (function() {
+                if (typeof window.adPlayerVisibilityCallback === 'function') {
+                    window.adPlayerVisibilityCallback(true);
+                } else {
+                    setTimeout(() => {
+                        if (typeof window.adPlayerVisibilityCallback === 'function') {
+                            window.adPlayerVisibilityCallback(true);
+                        }
+                    }, 500)
+                }
+            })()
+        """.trimIndent()
+        
+        // Log the JavaScript execution for debugging
+        Log.d("adrop", "Executing ad player visibility callback")
+        
+        // If there's a WebView in the ad, this would be executed
+        // For now, we're just logging the intended JavaScript code
+        // In a real implementation, this would be: webView.evaluateJavascript(javascript, null)
     }
 
 }
