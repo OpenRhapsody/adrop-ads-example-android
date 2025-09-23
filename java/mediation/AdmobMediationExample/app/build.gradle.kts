@@ -39,5 +39,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
     implementation("com.google.android.gms:play-services-ads:23.3.0")
-    implementation("io.adrop:mediation-admob:0.1.2")
+    implementation("io.adrop:mediation-admob:0.1.3")
 }
