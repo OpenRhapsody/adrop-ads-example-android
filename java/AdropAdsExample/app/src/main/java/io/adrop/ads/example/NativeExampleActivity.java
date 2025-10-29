@@ -41,7 +41,7 @@ public class NativeExampleActivity extends AppCompatActivity {
     }
 
     private void load() {
-        nativeAd = new AdropNativeAd(this, NATIVE_UNIT_ID, CONTEXT_ID);
+        nativeAd = new AdropNativeAd(this, NATIVE_UNIT_ID);
         nativeAd.setListener(new AdropNativeAdListener() {
             @Override
             public void onAdReceived(AdropNativeAd adropNativeAd) {
