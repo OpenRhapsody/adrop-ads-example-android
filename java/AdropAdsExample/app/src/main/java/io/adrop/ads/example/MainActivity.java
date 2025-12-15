@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setButtons() {
         findViewById(R.id.banner_example).setOnClickListener(v -> start(BannerExampleActivity.class));
-        findViewById(R.id.quest_banner_example).setOnClickListener(v -> start(QuestBannerExampleActivity.class));
         findViewById(R.id.interstitial_example).setOnClickListener(v -> start(InterstitialExampleActivity.class));
         findViewById(R.id.rewarded_example).setOnClickListener(v -> start(RewardedAdExampleActivity.class));
         findViewById(R.id.native_example).setOnClickListener(v -> start(NativeExampleActivity.class));

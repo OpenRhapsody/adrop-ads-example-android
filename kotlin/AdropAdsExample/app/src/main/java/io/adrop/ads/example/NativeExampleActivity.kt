@@ -39,24 +39,32 @@ class NativeExampleActivity : AppCompatActivity() {
         load()
     }
 
+    /**
+     * Loads a native ad and sets up the listener for ad events.
+     * The native ad is displayed in a RecyclerView using PostAdapter.
+     */
     private fun load() {
         nativeAd = AdropNativeAd(this, NATIVE_UNIT_ID, CONTEXT_ID)
         nativeAd?.listener = object : AdropNativeAdListener {
+            // Called when an ad is successfully loaded and ready to be displayed
             override fun onAdReceived(ad: AdropNativeAd) {
                 Log.d("adrop", "native ad received")
                 recyclerView.adapter = PostAdapter(ad)
                 progressBar.visibility = View.GONE
             }
 
+            // Called when the user clicks on the ad
             override fun onAdClick(ad: AdropNativeAd) {
                 Log.d("adrop", "native ad clicked")
             }
 
+            // Called when an ad fails to load
             override fun onAdFailedToReceive(ad: AdropNativeAd, errorCode: AdropErrorCode) {
                 Log.d("adrop", "native ad failed to receive, $errorCode")
                 Toast.makeText(this@NativeExampleActivity, ErrorUtils.descriptionOf(errorCode), Toast.LENGTH_SHORT).show()
             }
 
+            // Called when an ad impression is recorded
             override fun onAdImpression(ad: AdropNativeAd) {
                 Log.d("adrop", "native ad impression")
             }
@@ -65,6 +73,7 @@ class NativeExampleActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        // Clean up the native ad to prevent memory leaks
         nativeAd?.destroy()
         super.onDestroy()
     }

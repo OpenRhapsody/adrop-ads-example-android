@@ -12,9 +12,11 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AdropJavaExample"
             tools:targetApi="31">
-        <activity
-                android:name=".QuestBannerExampleActivity"
-                android:exported="false"/>
+        <!-- AdMob Application ID. Required for backfill ads. Replace with your own App ID from AdMob Console -->
+        <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="ca-app-pub-2926914265361170~6504009578"/>
+
         <activity
                 android:name=".PopupExampleActivity"
                 android:exported="false"/>

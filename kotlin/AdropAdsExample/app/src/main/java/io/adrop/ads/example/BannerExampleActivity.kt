@@ -35,12 +35,18 @@ class BannerExampleActivity : AppCompatActivity() {
         findViewById<View>(R.id.load_invalid).setOnClickListener { _ -> load(INVALID_UNIT_ID) }
     }
 
+    /**
+     * Loads a banner ad with the specified unit ID.
+     * Creates a new AdropBanner instance and sets up the listener for ad events.
+     */
     private fun load(unitId: String) {
+        // Destroy previous banner if exists to prevent memory leaks
         if (banner != null) {
             banner?.destroy()
         }
         banner = AdropBanner(this, unitId, CONTEXT_ID).apply {
             listener = object : AdropBannerListener {
+                // Called when an ad is successfully loaded and ready to be displayed
                 override fun onAdReceived(receivedBanner: AdropBanner) {
                     Log.d("adrop", "banner received " + receivedBanner.getUnitId() + " size: " + receivedBanner.creativeSize.width + "x" + receivedBanner.creativeSize.height)
                     bannerContainer.removeAllViews()
@@ -49,14 +55,17 @@ class BannerExampleActivity : AppCompatActivity() {
                     tvErrorCode.text = null
                 }
 
+                // Called when an ad impression is recorded
                 override fun onAdImpression(banner: AdropBanner) {
                     Log.d("adrop", "banner impressed ${banner.getUnitId()}")
                 }
 
+                // Called when the user clicks on the ad
                 override fun onAdClicked(clickedBanner: AdropBanner) {
                     Log.d("adrop", "banner clicked ${clickedBanner.getUnitId()}")
                 }
 
+                // Called when an ad fails to load
                 override fun onAdFailedToReceive(failedBanner: AdropBanner, errorCode: AdropErrorCode) {
                     Log.d("adrop", "banner failed to receive ${failedBanner.getUnitId()}, $errorCode")
                     tvErrorCode.text = errorCode.name
@@ -69,6 +78,7 @@ class BannerExampleActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // Clean up the banner to prevent memory leaks
         banner?.destroy()
         banner = null
     }

@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setButtons() {
         findViewById<View>(R.id.banner_example).setOnClickListener { start(BannerExampleActivity::class.java) }
-        findViewById<View>(R.id.quest_banner_example).setOnClickListener { start(QuestBannerExampleActivity::class.java) }
         findViewById<View>(R.id.interstitial_example).setOnClickListener { start(InterstitialExampleActivity::class.java) }
         findViewById<View>(R.id.rewarded_example).setOnClickListener { start(RewardedAdExampleActivity::class.java) }
         findViewById<View>(R.id.native_example).setOnClickListener {start(NativeExampleActivity::class.java) }

@@ -41,12 +41,18 @@ public class BannerExampleActivity extends AppCompatActivity {
         findViewById(R.id.load_invalid).setOnClickListener(v -> load(INVALID_UNIT_ID));
     }
 
+    /**
+     * Loads a banner ad with the specified unit ID.
+     * Creates a new AdropBanner instance and sets up the listener for ad events.
+     */
     private void load(String unitId) {
+        // Destroy previous banner if exists to prevent memory leaks
         if (banner != null) {
             banner.destroy();
         }
         banner = new AdropBanner(this, unitId, CONTEXT_ID);
         banner.setListener(new AdropBannerListener() {
+            // Called when an ad is successfully loaded and ready to be displayed
             @Override
             public void onAdReceived(AdropBanner receivedBanner) {
                 Log.d("adrop", String.format("banner received: %s, creativeSize: %f x %f", receivedBanner.getUnitId(), receivedBanner.getCreativeSize().getWidth(), receivedBanner.getCreativeSize().getHeight()));
@@ -56,16 +62,19 @@ public class BannerExampleActivity extends AppCompatActivity {
                 tvErrorCode.setText(null);
             }
 
+            // Called when an ad impression is recorded
             @Override
             public void onAdImpression(AdropBanner adropBanner) {
                 Log.d("adrop", String.format("banner impressed: %s", adropBanner.getUnitId()));
             }
 
+            // Called when the user clicks on the ad
             @Override
             public void onAdClicked(AdropBanner clickedBanner) {
                 Log.d("adrop", String.format("banner clicked: %s ", clickedBanner.getUnitId()));
             }
 
+            // Called when an ad fails to load
             @Override
             public void onAdFailedToReceive(AdropBanner failedBanner, AdropErrorCode errorCode) {
                 Log.d("adrop", String.format("banner failed to receive: %s, %s", failedBanner.getUnitId(), errorCode));
@@ -79,6 +88,7 @@ public class BannerExampleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // Clean up the banner to prevent memory leaks
         if (banner != null) {
             banner.destroy();
             banner = null;

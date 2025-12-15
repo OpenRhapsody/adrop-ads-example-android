@@ -49,6 +49,10 @@ public class PopupExampleActivity extends AppCompatActivity {
         reset(PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM);
     }
 
+    /**
+     * Resets the popup ad with a new unit ID.
+     * Destroys the previous ad instance and creates a new one with listeners.
+     */
     private void reset(String unitId) {
         if (popupAd != null) {
             popupAd.destroy();
@@ -56,32 +60,38 @@ public class PopupExampleActivity extends AppCompatActivity {
 
         popupAd = new AdropPopupAd(this, unitId);
         popupAd.setPopupAdListener(new AdropPopupAdListener() {
+            // Called when an ad is successfully loaded and ready to be shown
             @Override
             public void onAdReceived(AdropPopupAd adropPopupAd) {
                 isLoaded = true;
                 btnShow.setEnabled(true);
             }
 
+            // Called when an ad fails to load
             @Override
             public void onAdFailedToReceive(AdropPopupAd adropPopupAd, AdropErrorCode adropErrorCode) {
                 setError(adropErrorCode);
             }
 
+            // Called when an ad impression is recorded
             @Override
             public void onAdImpression(AdropPopupAd adropPopupAd) {
 
             }
 
+            // Called when the user clicks on the ad
             @Override
             public void onAdClicked(AdropPopupAd adropPopupAd) {
 
             }
 
+            // Called right before the fullscreen ad is presented
             @Override
             public void onAdWillPresentFullScreen(AdropPopupAd adropPopupAd) {
 
             }
 
+            // Called when the fullscreen ad is presented
             @Override
             public void onAdDidPresentFullScreen(AdropPopupAd adropPopupAd) {
                 isShown = true;
@@ -92,32 +102,39 @@ public class PopupExampleActivity extends AppCompatActivity {
                 tvErrorDesc.setText(null);
             }
 
+            // Called right before the fullscreen ad is dismissed
             @Override
             public void onAdWillDismissFullScreen(AdropPopupAd adropPopupAd) {
 
             }
 
+            // Called when the fullscreen ad is dismissed
             @Override
             public void onAdDidDismissFullScreen(AdropPopupAd adropPopupAd) {
 
             }
 
+            // Called when the ad fails to show in fullscreen
             @Override
             public void onAdFailedToShowFullScreen(AdropPopupAd adropPopupAd, AdropErrorCode adropErrorCode) {
                 setError(adropErrorCode);
             }
         });
+        // Close listener handles user interactions with popup close options
         popupAd.setCloseListener(new AdropPopupAdCloseListener() {
+            // Called when the popup is closed
             @Override
             public void onClosed(AdropPopupAd adropPopupAd) {
                 Log.d("adrop", "popup ad closed");
             }
 
+            // Called when user clicks the dimmed background area
             @Override
             public void onDimClicked(AdropPopupAd adropPopupAd) {
                 Log.d("adrop", "popup ad dim clicked");
             }
 
+            // Called when user clicks "Don't show today" option
             @Override
             public void onTodayOffClicked(AdropPopupAd adropPopupAd) {
                 Log.d("adrop", "popup ad today off clicked");

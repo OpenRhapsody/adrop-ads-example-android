@@ -47,22 +47,35 @@ class PopupExampleActivity : AppCompatActivity() {
         reset(PUBLIC_TEST_UNIT_ID_POPUP_BOTTOM)
     }
 
+    /**
+     * Resets the popup ad with a new unit ID.
+     * Destroys the previous ad instance and creates a new one with listeners.
+     */
     private fun reset(unitId: String) {
         popupAd?.destroy()
         popupAd = AdropPopupAd(this, unitId)
         popupAd?.popupAdListener = object : AdropPopupAdListener {
+            // Called when an ad is successfully loaded and ready to be shown
             override fun onAdReceived(adropPopupAd: AdropPopupAd) {
                 isLoaded = true
                 btnShow.setEnabled(true)
             }
 
+            // Called when an ad fails to load
             override fun onAdFailedToReceive(adropPopupAd: AdropPopupAd, adropErrorCode: AdropErrorCode) {
                 setError(adropErrorCode)
             }
 
+            // Called when an ad impression is recorded
             override fun onAdImpression(adropPopupAd: AdropPopupAd) {}
+
+            // Called when the user clicks on the ad
             override fun onAdClicked(adropPopupAd: AdropPopupAd) {}
+
+            // Called right before the fullscreen ad is presented
             override fun onAdWillPresentFullScreen(adropPopupAd: AdropPopupAd) {}
+
+            // Called when the fullscreen ad is presented
             override fun onAdDidPresentFullScreen(adropPopupAd: AdropPopupAd) {
                 isShown = true
                 btnReset.setEnabled(true)
@@ -72,21 +85,30 @@ class PopupExampleActivity : AppCompatActivity() {
                 tvErrorDesc.setText(null)
             }
 
+            // Called right before the fullscreen ad is dismissed
             override fun onAdWillDismissFullScreen(adropPopupAd: AdropPopupAd) {}
+
+            // Called when the fullscreen ad is dismissed
             override fun onAdDidDismissFullScreen(adropPopupAd: AdropPopupAd) {}
+
+            // Called when the ad fails to show in fullscreen
             override fun onAdFailedToShowFullScreen(adropPopupAd: AdropPopupAd, adropErrorCode: AdropErrorCode) {
                 setError(adropErrorCode)
             }
         }
+        // Close listener handles user interactions with popup close options
         popupAd?.closeListener = object: AdropPopupAdCloseListener {
+            // Called when user clicks "Don't show today" option
             override fun onTodayOffClicked(ad: AdropPopupAd) {
                 Log.d("adrop", "popup ad today off clicked")
             }
 
+            // Called when user clicks the dimmed background area
             override fun onDimClicked(ad: AdropPopupAd) {
                 Log.d("adrop", "popup ad dim clicked")
             }
 
+            // Called when the popup is closed
             override fun onClosed(ad: AdropPopupAd) {
                 Log.d("adrop", "popup ad closed")
             }

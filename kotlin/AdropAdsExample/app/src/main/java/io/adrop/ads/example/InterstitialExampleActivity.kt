@@ -46,37 +46,53 @@ class InterstitialExampleActivity : AppCompatActivity() {
         reset(PUBLIC_TEST_UNIT_ID_INTERSTITIAL)
     }
 
+    /**
+     * Resets the interstitial ad with a new unit ID.
+     * Destroys the previous ad instance and creates a new one with the listener.
+     */
     private fun reset(unitId: String) {
         interstitialAd?.destroy()
         interstitialAd = AdropInterstitialAd(this, unitId)
         interstitialAd?.interstitialAdListener = object : AdropInterstitialAdListener {
+            // Called when the ad fails to show in fullscreen
             override fun onAdFailedToShowFullScreen(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
                 setError(errorCode)
             }
 
+            // Called when the fullscreen ad is dismissed
             override fun onAdDidDismissFullScreen(ad: AdropInterstitialAd) {}
+
+            // Called right before the fullscreen ad is dismissed
             override fun onAdWillDismissFullScreen(ad: AdropInterstitialAd) {}
+
+            // Called when the fullscreen ad is presented
             override fun onAdDidPresentFullScreen(ad: AdropInterstitialAd) {
                 isShown = true
                 btnReset.isEnabled = true
                 btnResetInvalid.isEnabled = true
             }
 
+            // Called right before the fullscreen ad is presented
             override fun onAdWillPresentFullScreen(ad: AdropInterstitialAd) {}
+
+            // Called when the user clicks on the ad
             override fun onAdClicked(ad: AdropInterstitialAd) {
                 Log.d("adrop", "InterstitialAd clicked " + ad.unitId)
             }
 
+            // Called when an ad impression is recorded
             override fun onAdImpression(ad: AdropInterstitialAd) {
                 Log.d("adrop", "InterstitialAd impression " + ad.unitId)
             }
 
+            // Called when an ad is successfully loaded and ready to be shown
             override fun onAdReceived(ad: AdropInterstitialAd) {
                 Log.d("adrop", "InterstitialAd received " + ad.unitId)
                 isLoaded = true
                 btnShow.isEnabled = true
             }
 
+            // Called when an ad fails to load
             override fun onAdFailedToReceive(ad: AdropInterstitialAd, errorCode: AdropErrorCode) {
                 setError(errorCode)
             }
@@ -102,6 +118,7 @@ class InterstitialExampleActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // Clean up the interstitial ad to prevent memory leaks
         interstitialAd?.destroy()
         interstitialAd = null
     }

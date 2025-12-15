@@ -48,6 +48,7 @@ public class RewardedAdExampleActivity extends AppCompatActivity {
         });
         findViewById(R.id.show).setOnClickListener(v -> {
             if (rewardedAd != null) {
+                // Show the rewarded ad with a callback to handle the reward
                 rewardedAd.show(this, (type, amount) -> {
                     Log.d("adrop", String.format("RewardedAd earn rewards / type: %d, amount: %d ", type, amount));
                     return null;
@@ -59,26 +60,34 @@ public class RewardedAdExampleActivity extends AppCompatActivity {
         reset(PUBLIC_TEST_UNIT_ID_REWARDED);
     }
 
+    /**
+     * Resets the rewarded ad with a new unit ID.
+     * Destroys the previous ad instance and creates a new one with the listener.
+     */
     private void reset(String unitId) {
         if (rewardedAd != null) {
             rewardedAd.destroy();
         }
         rewardedAd = new AdropRewardedAd(this, unitId);
         rewardedAd.setRewardedAdListener(new AdropRewardedAdListener() {
+            // Called when the ad fails to show in fullscreen
             @Override
             public void onAdFailedToShowFullScreen(@NotNull AdropRewardedAd ad, @NotNull AdropErrorCode errorCode) {
                 setError(errorCode);
             }
 
+            // Called when the fullscreen ad is dismissed
             @Override
             public void onAdDidDismissFullScreen(@NotNull AdropRewardedAd ad) {
                 Log.d("adrop", String.format("rewarded ad dismiss screen %s", ad.getUnitId()));
             }
 
+            // Called right before the fullscreen ad is dismissed
             @Override
             public void onAdWillDismissFullScreen(@NotNull AdropRewardedAd ad) {
             }
 
+            // Called when the fullscreen ad is presented
             @Override
             public void onAdDidPresentFullScreen(@NotNull AdropRewardedAd ad) {
                 isShown = true;
@@ -88,20 +97,24 @@ public class RewardedAdExampleActivity extends AppCompatActivity {
                 tvErrorDesc.setText(null);
             }
 
+            // Called right before the fullscreen ad is presented
             @Override
             public void onAdWillPresentFullScreen(@NotNull AdropRewardedAd ad) {
             }
 
+            // Called when the user clicks on the ad
             @Override
             public void onAdClicked(@NotNull AdropRewardedAd ad) {
                 Log.d("adrop", String.format("rewarded ad click %s", ad.getUnitId()));
             }
 
+            // Called when an ad impression is recorded
             @Override
             public void onAdImpression(@NotNull AdropRewardedAd ad) {
                 Log.d("adrop", String.format("rewarded ad impression %s", ad.getUnitId()));
             }
 
+            // Called when an ad is successfully loaded and ready to be shown
             @Override
             public void onAdReceived(@NotNull AdropRewardedAd ad) {
                 Log.d("adrop", String.format("rewarded ad received %s", ad.getUnitId()));
@@ -109,6 +122,7 @@ public class RewardedAdExampleActivity extends AppCompatActivity {
                 btnShow.setEnabled(true);
             }
 
+            // Called when an ad fails to load
             @Override
             public void onAdFailedToReceive(@NotNull AdropRewardedAd ad, @NotNull AdropErrorCode errorCode) {
                 setError(errorCode);
@@ -136,6 +150,7 @@ public class RewardedAdExampleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // Clean up the rewarded ad to prevent memory leaks
         if (rewardedAd != null) {
             rewardedAd.destroy();
             rewardedAd = null;

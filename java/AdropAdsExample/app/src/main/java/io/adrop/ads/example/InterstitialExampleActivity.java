@@ -56,25 +56,33 @@ public class InterstitialExampleActivity extends AppCompatActivity {
         reset(PUBLIC_TEST_UNIT_ID_INTERSTITIAL);
     }
 
+    /**
+     * Resets the interstitial ad with a new unit ID.
+     * Destroys the previous ad instance and creates a new one with the listener.
+     */
     private void reset(String unitId) {
         if (interstitialAd != null) {
             interstitialAd.destroy();
         }
         interstitialAd = new AdropInterstitialAd(this, unitId);
         interstitialAd.setInterstitialAdListener(new AdropInterstitialAdListener() {
+            // Called when the ad fails to show in fullscreen
             @Override
             public void onAdFailedToShowFullScreen(@NotNull AdropInterstitialAd ad, @NotNull AdropErrorCode errorCode) {
                 setError(errorCode);
             }
 
+            // Called when the fullscreen ad is dismissed
             @Override
             public void onAdDidDismissFullScreen(@NotNull AdropInterstitialAd ad) {
             }
 
+            // Called right before the fullscreen ad is dismissed
             @Override
             public void onAdWillDismissFullScreen(@NotNull AdropInterstitialAd ad) {
             }
 
+            // Called when the fullscreen ad is presented
             @Override
             public void onAdDidPresentFullScreen(@NotNull AdropInterstitialAd ad) {
                 isShown = true;
@@ -84,20 +92,24 @@ public class InterstitialExampleActivity extends AppCompatActivity {
                 tvErrorDesc.setText(null);
             }
 
+            // Called right before the fullscreen ad is presented
             @Override
             public void onAdWillPresentFullScreen(@NotNull AdropInterstitialAd ad) {
             }
 
+            // Called when the user clicks on the ad
             @Override
             public void onAdClicked(@NotNull AdropInterstitialAd ad) {
                 Log.d("adrop", String.format("InterstitialAd clicked: %s", ad.getUnitId()));
             }
 
+            // Called when an ad impression is recorded
             @Override
             public void onAdImpression(@NotNull AdropInterstitialAd ad) {
                 Log.d("adrop", String.format("InterstitialAd impression: %s", ad.getUnitId()));
             }
 
+            // Called when an ad is successfully loaded and ready to be shown
             @Override
             public void onAdReceived(@NotNull AdropInterstitialAd ad) {
                 Log.d("adrop", String.format("InterstitialAd received: %s", ad.getUnitId()));
@@ -105,6 +117,7 @@ public class InterstitialExampleActivity extends AppCompatActivity {
                 btnShow.setEnabled(true);
             }
 
+            // Called when an ad fails to load
             @Override
             public void onAdFailedToReceive(@NotNull AdropInterstitialAd ad, @NotNull AdropErrorCode errorCode) {
                 setError(errorCode);
@@ -132,6 +145,7 @@ public class InterstitialExampleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // Clean up the interstitial ad to prevent memory leaks
         if (interstitialAd != null) {
             interstitialAd.destroy();
             interstitialAd = null;

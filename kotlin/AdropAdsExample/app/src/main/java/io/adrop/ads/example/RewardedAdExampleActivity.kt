@@ -38,6 +38,7 @@ class RewardedAdExampleActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.load).setOnClickListener { rewardedAd?.load() }
         findViewById<View>(R.id.show).setOnClickListener {
+            // Show the rewarded ad with a callback to handle the reward
             rewardedAd?.show(this) { type: Int, amount: Int ->
                 Log.d("adrop", "RewardedAd earn rewards type: $type, amount: $amount")
             }
@@ -47,40 +48,55 @@ class RewardedAdExampleActivity : AppCompatActivity() {
         reset(PUBLIC_TEST_UNIT_ID_REWARDED)
     }
 
+    /**
+     * Resets the rewarded ad with a new unit ID.
+     * Destroys the previous ad instance and creates a new one with the listener.
+     */
     private fun reset(unitId: String) {
         rewardedAd?.destroy()
         rewardedAd = AdropRewardedAd(this, unitId)
         rewardedAd?.rewardedAdListener = object : AdropRewardedAdListener {
+            // Called when the ad fails to show in fullscreen
             override fun onAdFailedToShowFullScreen(ad: AdropRewardedAd, errorCode: AdropErrorCode) {
                 setError(errorCode)
             }
 
+            // Called when the fullscreen ad is dismissed
             override fun onAdDidDismissFullScreen(ad: AdropRewardedAd) {
                 Log.d("adrop", "rewarded ad dismiss screen $ad")
             }
 
+            // Called right before the fullscreen ad is dismissed
             override fun onAdWillDismissFullScreen(ad: AdropRewardedAd) {}
+
+            // Called when the fullscreen ad is presented
             override fun onAdDidPresentFullScreen(ad: AdropRewardedAd) {
                 isShown = true
                 btnReset.isEnabled = true
                 btnResetInvalid.isEnabled = true
             }
 
+            // Called right before the fullscreen ad is presented
             override fun onAdWillPresentFullScreen(ad: AdropRewardedAd) {}
+
+            // Called when the user clicks on the ad
             override fun onAdClicked(ad: AdropRewardedAd) {
                 Log.d("adrop", "rewarded ad click $ad")
             }
 
+            // Called when an ad impression is recorded
             override fun onAdImpression(ad: AdropRewardedAd) {
                 Log.d("adrop", "rewarded ad impression $ad")
             }
 
+            // Called when an ad is successfully loaded and ready to be shown
             override fun onAdReceived(ad: AdropRewardedAd) {
                 Log.d("adrop", "rewarded ad received $ad")
                 isLoaded = true
                 btnShow.isEnabled = true
             }
 
+            // Called when an ad fails to load
             override fun onAdFailedToReceive(ad: AdropRewardedAd, errorCode: AdropErrorCode) {
                 setError(errorCode)
             }
@@ -106,6 +122,7 @@ class RewardedAdExampleActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // Clean up the rewarded ad to prevent memory leaks
         rewardedAd?.destroy()
         rewardedAd = null
     }

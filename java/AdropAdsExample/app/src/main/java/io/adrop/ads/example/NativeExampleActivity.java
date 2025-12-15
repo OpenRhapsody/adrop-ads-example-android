@@ -40,9 +40,14 @@ public class NativeExampleActivity extends AppCompatActivity {
         load();
     }
 
+    /**
+     * Loads a native ad and sets up the listener for ad events.
+     * The native ad is displayed in a RecyclerView using PostAdapter.
+     */
     private void load() {
         nativeAd = new AdropNativeAd(this, NATIVE_UNIT_ID);
         nativeAd.setListener(new AdropNativeAdListener() {
+            // Called when an ad is successfully loaded and ready to be displayed
             @Override
             public void onAdReceived(AdropNativeAd adropNativeAd) {
                 Log.d("adrop", "native ad received");
@@ -50,17 +55,20 @@ public class NativeExampleActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
             }
 
+            // Called when the user clicks on the ad
             @Override
             public void onAdClick(AdropNativeAd adropNativeAd) {
                 Log.d("adrop", "native ad clicked");
             }
 
+            // Called when an ad fails to load
             @Override
             public void onAdFailedToReceive(AdropNativeAd adropNativeAd, AdropErrorCode adropErrorCode) {
                 Log.d("adrop", String.format("native ad failed to receive, %s", adropErrorCode));
                 Toast.makeText(NativeExampleActivity.this, ErrorUtils.descriptionOf(adropErrorCode), Toast.LENGTH_SHORT).show();
             }
 
+            // Called when an ad impression is recorded
             @Override
             public void onAdImpression(AdropNativeAd adropNativeAd) {
                 Log.d("adrop", "native ad impression");
@@ -72,6 +80,7 @@ public class NativeExampleActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        // Clean up the native ad to prevent memory leaks
         if (nativeAd != null) {
             nativeAd.destroy();
         }
