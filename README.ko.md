@@ -6,9 +6,9 @@ Language: [English](./README.md) | 한국어
 
 ## 시작하기
 
-- [Adrop 개발자 문서](https://help.adrop.io/adcontrol/developer-guide/adrop-sdk/android-sdk) - SDK 연동 및 고급 기능
-- [Adrop 콘솔](https://adrop.io) - 앱 등록 및 광고 단위 ID 발급
-- [테스트 광고 단위 ID](https://help.adrop.io/adcontrol/developer-guide/test-environment#test-unit-id) - 개발 중 테스트용 ID
+- [Adrop 콘솔](https://console.adrop.io) - 앱 등록 및 광고 단위 ID 발급
+- [Adrop 개발자 문서](https://docs.adrop.io/ko/sdk/android) - SDK 연동 및 고급 기능
+- [테스트 광고 단위 ID](https://docs.adrop.io/ko/sdk#테스트-환경) - 개발 중 테스트용 ID
 
 ## 예제
 
@@ -62,4 +62,3 @@ app/src/main/assets/adrop_service.json
 ### 4. 빌드 및 실행
 
 디바이스 또는 에뮬레이터에서 빌드하고 실행합니다.
-
