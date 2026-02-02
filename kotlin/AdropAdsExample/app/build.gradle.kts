@@ -48,5 +48,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("io.adrop:adrop-ads:1.7.6")
-    implementation("io.adrop:adrop-ads-backfill:1.7.5") // Optional: For AdMob backfill ads
+    implementation("io.adrop:adrop-ads-backfill:1.7.6") // Optional: For AdMob backfill ads
 }
