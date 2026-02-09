@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import io.adrop.ads.example.helper.ErrorUtils;
 import io.adrop.ads.interstitial.AdropInterstitialAd;
+import io.adrop.ads.interstitial.AdropInterstitialAdCloseListener;
 import io.adrop.ads.interstitial.AdropInterstitialAdListener;
 import io.adrop.ads.model.AdropErrorCode;
 
@@ -123,6 +124,13 @@ public class InterstitialExampleActivity extends AppCompatActivity {
                 setError(errorCode);
             }
         });
+        interstitialAd.setCloseListener(new AdropInterstitialAdCloseListener() {
+            @Override
+            public void onBackPressed(AdropInterstitialAd ad) {
+                Log.d("adrop", String.format("InterstitialAd back pressed: %s", ad.getUnitId()));
+            }
+        });
+
         btnShow.setEnabled(false);
         btnReset.setEnabled(false);
         btnResetInvalid.setEnabled(false);

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import io.adrop.ads.example.helper.ErrorUtils
 import io.adrop.ads.interstitial.AdropInterstitialAd
+import io.adrop.ads.interstitial.AdropInterstitialAdCloseListener
 import io.adrop.ads.interstitial.AdropInterstitialAdListener
 import io.adrop.ads.model.AdropErrorCode
 
@@ -97,6 +98,12 @@ class InterstitialExampleActivity : AppCompatActivity() {
                 setError(errorCode)
             }
         }
+        interstitialAd?.closeListener = object: AdropInterstitialAdCloseListener {
+            override fun onBackPressed(ad: AdropInterstitialAd) {
+                Log.d("adrop", "InterstitialAd back pressed " + ad.unitId)
+            }
+        }
+
         btnShow.isEnabled = false
         btnReset.isEnabled = false
         btnResetInvalid.isEnabled = false
