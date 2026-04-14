@@ -57,7 +57,7 @@ public class NativeExampleActivity extends AppCompatActivity {
 
             // Called when the user clicks on the ad
             @Override
-            public void onAdClick(AdropNativeAd adropNativeAd) {
+            public void onAdClicked(AdropNativeAd adropNativeAd) {
                 Log.d("adrop", "native ad clicked");
             }
 
